@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace VacinasInfantis.Comunicacao.Resposta;
 
-public class RespostaVacinasInfantis
+public class RespostaCompleta
 {
-    public List<RespostaSimplificada> Vacinas { get; set; } = [];
+    public List<RespostaVacinas> Vacinas { get; set; } = [];
 }

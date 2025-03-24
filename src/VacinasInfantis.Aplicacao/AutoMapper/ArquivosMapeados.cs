@@ -19,7 +19,8 @@ public class ArquivosMapeados : Profile
 
     private void Respostas()
     {
-        CreateMap<VacinasCriancas, GetAllVacinas>();
+        CreateMap<VacinasCriancas, RespostaSimplificada>();
+        CreateMap<VacinasCriancas, RespostaVacinas>();
     }
 
 }

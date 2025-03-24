@@ -23,7 +23,7 @@ public class GetVacinasInfantisUseCase : IGetVacinasInfantisUseCase
 
         return new RespostaVacinasInfantis
         {
-            Vacinas = _mapeamento.Map<List<GetAllVacinas>>(result)
+            Vacinas = _mapeamento.Map<List<RespostaSimplificada>>(result)
         };
     }
 }

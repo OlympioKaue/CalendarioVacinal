@@ -14,8 +14,18 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio
         _dbContext = dbContext;
     }
 
+    public async Task<List<VacinasCriancas>> ObterVacinasAtrasadas(long idade)
+    {
+        return await _dbContext.VacinasCriancas.AsNoTracking().Where(user => user.MesAplicacao <= idade).ToListAsync();
+    }
+
     public async Task<List<VacinasCriancas>> ObterVacinasCriancas()
     {
         return await _dbContext.VacinasCriancas.AsNoTracking().ToListAsync();
+    }
+
+    public async Task<VacinasCriancas?> ObterVacinasIdade(long idade)
+    {
+        return await _dbContext.VacinasCriancas.AsNoTracking().FirstOrDefaultAsync(user => user.MesAplicacao == idade);
     }
 }
