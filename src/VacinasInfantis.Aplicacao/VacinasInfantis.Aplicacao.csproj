@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VacinasInfantis.Comunicacao\VacinasInfantis.Comunicacao.csproj" />
+    <ProjectReference Include="..\VacinasInfantis.Domain\VacinasInfantis.Domain.csproj" />
+    <ProjectReference Include="..\VacinasInfantis.Excecao\VacinasInfantis.Excecao.csproj" />
+  </ItemGroup>
+
+</Project>
