@@ -5,7 +5,7 @@ using VacinasInfantis.Infrastrutura.DataBaseAcesso;
 
 namespace VacinasInfantis.Infrastrutura.Repositorios;
 
-internal class VacinasRepositorio : ILeituraVacinasRepositorio
+internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
 {
     private readonly VacinaInfantilDbContext _dbContext;
 
@@ -14,18 +14,121 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio
         _dbContext = dbContext;
     }
 
-    public async Task<List<VacinasCriancas>> ObterVacinasAtrasadas(long idade)
+
+
+    public async Task AddVacinas(Vacinas vacinas)
     {
-        return await _dbContext.VacinasCriancas.AsNoTracking().Where(user => user.MesAplicacao <= idade).ToListAsync();
+        var criancaExiste = await _dbContext.Criancas.AnyAsync(crianca => crianca.Id == vacinas.CriancasId);
+
+        if (criancaExiste is false)
+        {
+            throw new Exception("A criança não existe.");
+        }
+
+        var profissionalExiste = await _dbContext.Profissionais.AnyAsync(profissional => profissional.Id == vacinas.ProfissionalSaudeId);
+
+        if (profissionalExiste is false)
+        {
+            throw new Exception("O profissional de saúde não existe.");
+        }
+
+
+        var vacinaCrianca = new Vacinas
+        {
+            CriancasId = vacinas.CriancasId,
+            NomeDaVacina = vacinas.NomeDaVacina,
+            MesAplicacao = vacinas.MesAplicacao,
+            ProfissionalSaudeId = vacinas.ProfissionalSaudeId,
+            DataAplicacao = vacinas.DataAplicacao
+        };
+
+        await _dbContext.Vacinas.AddAsync(vacinaCrianca);
     }
 
-    public async Task<List<VacinasCriancas>> ObterVacinasCriancas()
+    public async Task<List<Vacinas>> ObterVacinasAtrasadas(long idade)
     {
-        return await _dbContext.VacinasCriancas.AsNoTracking().ToListAsync();
+        return await _dbContext.Vacinas.AsNoTracking().Where(user => user.MesAplicacao <= idade).ToListAsync();
     }
 
-    public async Task<VacinasCriancas?> ObterVacinasIdade(long idade)
+    public async Task<List<Vacinas>> ObterVacinasCriancas()
     {
-        return await _dbContext.VacinasCriancas.AsNoTracking().FirstOrDefaultAsync(user => user.MesAplicacao == idade);
+        return await _dbContext.Vacinas.AsNoTracking().ToListAsync();
     }
+
+    public async Task<Vacinas?> ObterVacinasIdade(long idade)
+    {
+        return await _dbContext.Vacinas.AsNoTracking().FirstOrDefaultAsync(user => user.MesAplicacao == idade);
+    }
+
+    public Task<List<Vacinas>> ObterVacinasAtual()
+    {
+
+        var hoje = DateTime.Today;
+        var criancas = _dbContext.Criancas.AsNoTracking().ToList();
+        var vacinasProximas = new List<Vacinas>();
+
+
+        foreach (var obj in criancas)
+        {
+            int idadeMeses = ((hoje.Year - obj.DataDeNascimentoDaCrianca.Year) * 12) + (hoje.Month - obj.DataDeNascimentoDaCrianca.Month);
+
+            // Vacina Mês Atual
+            var vacinaMesAtual = _dbContext.Vacinas.Include(v => v.ProfissionalSaude).Where(v => v.MesAplicacao == idadeMeses).ToList();
+           
+
+            vacinasProximas.AddRange(vacinaMesAtual);
+
+
+
+
+        }
+
+
+
+
+        return Task.FromResult(vacinasProximas);
+
+    }
+
+    public Task<List<Vacinas>> ObterVacinasProximoMes()
+    {
+
+        var hoje = DateTime.Today;
+        var criancas = _dbContext.Criancas.AsNoTracking().ToList();
+        var vacinasProximas = new List<Vacinas>();
+
+        foreach (var obj in criancas)
+        {
+            int idadeMeses = ((hoje.Year - obj.DataDeNascimentoDaCrianca.Year) * 12) + (hoje.Month - obj.DataDeNascimentoDaCrianca.Month);
+
+            // Vacina Mês Seguinte
+            var VacinaMesSeguinte = _dbContext.Vacinas.Include(v => v.ProfissionalSaude).Where(v => v.MesAplicacao == idadeMeses + 1).ToList();
+
+            vacinasProximas.AddRange(VacinaMesSeguinte);
+
+        }
+
+        return Task.FromResult(vacinasProximas);
+    }
+
+    public async Task<Vacinas?> BuscarPorId(int id)
+    {
+        return await _dbContext.Vacinas.FindAsync(id);
+    }
+
+    public async Task AddCriancas(Criancas criancas)
+    {
+        await _dbContext.Criancas.AddAsync(criancas);
+
+    }
+
+
+
+    public async Task<List<Criancas>> BuscarCriancas()
+    {
+        return await _dbContext.Criancas.AsNoTracking().ToListAsync();
+    }
+
+   
 }
+

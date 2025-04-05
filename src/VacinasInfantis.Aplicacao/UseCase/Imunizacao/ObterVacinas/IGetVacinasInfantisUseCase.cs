@@ -1,7 +1,7 @@
-﻿using VacinasInfantis.Comunicacao.Resposta;
+﻿using VacinasInfantis.Comunicacao.Resposta.Criancas;
 using VacinasInfantis.Domain.Entidades;
 
-namespace VacinasInfantis.Aplicacao.UseCase.Vacinas.ObterVacinas;
+namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinas;
 
 public interface IGetVacinasInfantisUseCase
 {

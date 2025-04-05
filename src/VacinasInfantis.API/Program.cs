@@ -1,5 +1,6 @@
 using VacinasInfantis.Infrastrutura.ExtensaoDependencia;
 using VacinasInfantis.Aplicacao.ExtensaoDependencia;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AdicionarRepositorios(builder.Configuration);
 builder.Services.AdicionarAplicacao();
 
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

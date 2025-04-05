@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using VacinasInfantis.Comunicacao.Resposta;
+using VacinasInfantis.Comunicacao.Resposta.Criancas;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
 
-namespace VacinasInfantis.Aplicacao.UseCase.Vacinas.ObterVacinasIdade;
+namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasIdade;
 
 public class GetVacinasInfantisIdadeUseCase : IGetVacinasInfantisIdadeUseCase
 {
@@ -21,7 +21,7 @@ public class GetVacinasInfantisIdadeUseCase : IGetVacinasInfantisIdadeUseCase
 
         return new RespostaCompleta
         {
-            Vacinas = _mapeamento.Map<List<RespostaVacinas>>(result)
+            Vacinas = _mapeamento.Map<List<RespostaDeRegistroVacinas>>(result)
         };
 
 

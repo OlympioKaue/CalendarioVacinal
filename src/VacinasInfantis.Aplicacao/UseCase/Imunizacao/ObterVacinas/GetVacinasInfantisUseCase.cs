@@ -1,10 +1,10 @@
 ﻿
 using AutoMapper;
-using VacinasInfantis.Comunicacao.Resposta;
+using VacinasInfantis.Comunicacao.Resposta.Criancas;
 using VacinasInfantis.Domain.Entidades;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
 
-namespace VacinasInfantis.Aplicacao.UseCase.Vacinas.ObterVacinas;
+namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinas;
 
 public class GetVacinasInfantisUseCase : IGetVacinasInfantisUseCase
 {
@@ -26,4 +26,5 @@ public class GetVacinasInfantisUseCase : IGetVacinasInfantisUseCase
             Vacinas = _mapeamento.Map<List<RespostaSimplificada>>(result)
         };
     }
+
 }

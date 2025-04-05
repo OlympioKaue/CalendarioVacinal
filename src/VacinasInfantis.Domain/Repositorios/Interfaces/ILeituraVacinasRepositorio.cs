@@ -4,9 +4,14 @@ namespace VacinasInfantis.Domain.Repositorios.Interfaces;
 
 public interface ILeituraVacinasRepositorio
 {
-    Task<List<VacinasCriancas>> ObterVacinasCriancas();
+    Task<List<Vacinas>> ObterVacinasCriancas();
+    Task<List<Vacinas>> ObterVacinasAtual();
+    Task<List<Vacinas>> ObterVacinasProximoMes();
 
-    Task<VacinasCriancas?> ObterVacinasIdade(long idade);
+    Task<Vacinas?> ObterVacinasIdade(long idade);
 
-    Task<List<VacinasCriancas>> ObterVacinasAtrasadas(long idade);
+    Task<List<Vacinas>> ObterVacinasAtrasadas(long idade);
+
+
+   
 }

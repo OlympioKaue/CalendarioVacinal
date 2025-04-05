@@ -5,11 +5,9 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace VacinasInfantis.Comunicacao.Resposta;
+namespace VacinasInfantis.Comunicacao.Resposta.Criancas;
 
-public class RespostaSimplificada
+public class RespostaCompleta
 {
-    public string Nome { get; set; } = string.Empty;
-
-   
+    public List<RespostaDeRegistroVacinas> Vacinas { get; set; } = [];
 }

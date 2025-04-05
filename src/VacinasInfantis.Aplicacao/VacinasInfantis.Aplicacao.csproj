@@ -8,12 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="Hangfire" Version="1.8.18" />
+    <PackageReference Include="Hangfire.MySqlStorage" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\VacinasInfantis.Comunicacao\VacinasInfantis.Comunicacao.csproj" />
     <ProjectReference Include="..\VacinasInfantis.Domain\VacinasInfantis.Domain.csproj" />
     <ProjectReference Include="..\VacinasInfantis.Excecao\VacinasInfantis.Excecao.csproj" />
+    <ProjectReference Include="..\VacinasInfantis.Infrastrutura\VacinasInfantis.Infrastrutura.csproj" />
   </ItemGroup>
 
 </Project>
