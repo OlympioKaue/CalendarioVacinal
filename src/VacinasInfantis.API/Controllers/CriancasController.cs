@@ -12,7 +12,7 @@ public class CriancasController : ControllerBase
 {
     [HttpPost("RegistarCrianca")]
     [ProducesResponseType(typeof(CriancasSalvas), StatusCodes.Status201Created)]
-    public async Task<IActionResult> RegistrarCrianca([FromServices] IRegistrarCriancaUseCase useCase, [FromBody] RegistrarCriancas register)
+    public async Task<IActionResult> RegistrarCrianca([FromServices] IRegistrosDeCriancas useCase, [FromBody] RegistrarCriancas register)
     {
         var result = await useCase.Execute(register);
         return Created(string.Empty, result);

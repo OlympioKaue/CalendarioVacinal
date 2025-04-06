@@ -4,7 +4,7 @@ using VacinasInfantis.Comunicacao.Resposta.Criancas;
 
 namespace VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.RegistrarCrianca;
 
-public interface IRegistrarCriancaUseCase
+public interface IRegistrosDeCriancas
 {
     Task<RespostaDeRegistroCriancas> Execute(RegistrarCriancas registrar);
 }

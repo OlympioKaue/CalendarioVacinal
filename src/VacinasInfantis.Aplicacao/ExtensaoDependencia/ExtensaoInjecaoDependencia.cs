@@ -28,7 +28,7 @@ public static class ExtensaoInjecaoDependencia
     {
         services.AddScoped<IObterVacinasInfantis, GetVacinasInfantisUseCase>();
         services.AddScoped<IGetVacinasInfantisIdadeUseCase, ObterVacinasInfantisIdade>();
-        services.AddScoped<IRegistrarCriancaUseCase, RegistrarCriancaUseCase>();
+        services.AddScoped<IRegistrosDeCriancas, RegistrosDeCriancas>();
         services.AddScoped<IRegistroDeImunizantes, RegistroDeImunizantes>();
         services.AddScoped<IObterVacinasAtuais, ObterVacinasAtuais>();
         services.AddScoped<IRegistroEnfermagem, RegistroEnfermagem>();
