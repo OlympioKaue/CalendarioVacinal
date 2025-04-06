@@ -18,14 +18,19 @@ public class RegistrarCriancaUseCase : IRegistrarCriancaUseCase
         _salvadorDeDados = salvadorDeDados;
     }
 
-    public async Task<RespostaDeRegistro> Execute(RegistroVacinal request)
+    public async Task<RespostaDeRegistroCriancas> Execute(RegistrarCriancas registrar)
     {
-        var entity = _mapeamento.Map<Criancas>(request);
+        // mapear o objeto de entrada para a entidade
+        // adicione criancas ao banco de dados
+        // e salve as alterações
+        // retorne o objeto mapeado de resposta
+
+        var entity = _mapeamento.Map<Criancas>(registrar);
 
         await _adicionar.AddCriancas(entity);
 
         await _salvadorDeDados.Commit();
 
-        return _mapeamento.Map<RespostaDeRegistro>(entity);
+        return _mapeamento.Map<RespostaDeRegistroCriancas>(entity);
     }
 }

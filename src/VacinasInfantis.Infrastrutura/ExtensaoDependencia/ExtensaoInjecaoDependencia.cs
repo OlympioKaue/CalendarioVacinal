@@ -31,10 +31,10 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<ISalvadorDeDados, SalvarRepositorio>();
         services.AddScoped<IAdicionarProfissionaisSaude, EnfermagemRepositorio>();
         services.AddScoped<IProfissionalSaudeServico, EnfermagemRepositorio>();
-      
-     
 
-       
+
+        // Extensão de Injeção de Dependência para o repositório 
+
 
     }
 

@@ -1,6 +1,6 @@
 ﻿namespace VacinasInfantis.Comunicacao.Resposta.Enfermagem;
 
-public class ProfissionalAplicadorDto
+public class RespostaProfissionalAplicadorDTO
 {
     public List<RespostaProfissionaisEnfermagemDTO> Enfermagem { get; set; } = [];
 

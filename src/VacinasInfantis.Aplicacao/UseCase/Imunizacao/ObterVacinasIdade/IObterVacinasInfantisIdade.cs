@@ -4,5 +4,5 @@ namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasIdade;
 
 public interface IGetVacinasInfantisIdadeUseCase
 {
-    Task<RespostaCompleta> Execute(long idade);
+    Task<RespostaCompletaDasVacinas> Execute(long idade);
 }

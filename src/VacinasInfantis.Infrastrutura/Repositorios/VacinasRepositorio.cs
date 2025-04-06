@@ -45,26 +45,22 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
         await _dbContext.Vacinas.AddAsync(vacinaCrianca);
     }
 
-    public async Task<List<Vacinas>> ObterVacinasAtrasadas(long idade)
+    public async Task<List<Vacinas>> ObterVacinasIdade(long idade)
     {
         return await _dbContext.Vacinas.AsNoTracking().Where(user => user.MesAplicacao <= idade).ToListAsync();
     }
 
-    public async Task<List<Vacinas>> ObterVacinasCriancas()
+    public async Task<List<Vacinas>> ObterTodasVacinas()
     {
         return await _dbContext.Vacinas.AsNoTracking().ToListAsync();
     }
 
-    public async Task<Vacinas?> ObterVacinasIdade(long idade)
-    {
-        return await _dbContext.Vacinas.AsNoTracking().FirstOrDefaultAsync(user => user.MesAplicacao == idade);
-    }
 
-    public Task<List<Vacinas>> ObterVacinasAtual()
+    public Task<List<Vacinas>> ObterVacinasAtual(int id)
     {
 
         var hoje = DateTime.Today;
-        var criancas = _dbContext.Criancas.AsNoTracking().ToList();
+        var criancas = _dbContext.Criancas.Where(v => v.Id == id).AsNoTracking().ToList();
         var vacinasProximas = new List<Vacinas>();
 
 
@@ -90,11 +86,11 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
 
     }
 
-    public Task<List<Vacinas>> ObterVacinasProximoMes()
+    public Task<List<Vacinas>> ObterVacinasProximoMes(int id)
     {
 
         var hoje = DateTime.Today;
-        var criancas = _dbContext.Criancas.AsNoTracking().ToList();
+        var criancas = _dbContext.Criancas.Where(v => v.Id == id).AsNoTracking().ToList();
         var vacinasProximas = new List<Vacinas>();
 
         foreach (var obj in criancas)

@@ -6,20 +6,20 @@ using VacinasInfantis.Comunicacao.Resposta.Criancas;
 
 namespace VacinasInfantis.API.Controllers;
 
-[Route("Registros/Criancas[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class CriancasController : ControllerBase
 {
-    [HttpPost]
+    [HttpPost("RegistarCrianca")]
     [ProducesResponseType(typeof(CriancasSalvas), StatusCodes.Status201Created)]
-    public async Task<IActionResult> RegistrarCrianca([FromServices] IRegistrarCriancaUseCase useCase, [FromBody] RegistroVacinal register)
+    public async Task<IActionResult> RegistrarCrianca([FromServices] IRegistrarCriancaUseCase useCase, [FromBody] RegistrarCriancas register)
     {
         var result = await useCase.Execute(register);
         return Created(string.Empty, result);
     }
 
 
-    [HttpGet]
+    [HttpGet("BuscarCriancasRegistradas")]
     public async Task<IActionResult> ObterCriancas([FromServices] IObterCriancasUseCase useCase)
     {
         var result = await useCase.Execute();

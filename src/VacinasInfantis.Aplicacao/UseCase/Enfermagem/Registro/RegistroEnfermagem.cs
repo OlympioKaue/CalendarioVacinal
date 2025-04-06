@@ -6,14 +6,14 @@ using VacinasInfantis.Domain.Repositorios.Interfaces;
 
 namespace VacinasInfantis.Aplicacao.UseCase.Enfermagem.Registro;
 
-public class RegistroEnfermagemUseCase : IRegistroEnfermagemUseCase
+public class RegistroEnfermagem : IRegistroEnfermagem
 {
     private readonly IAdicionarProfissionaisSaude _adicionar;
     private readonly IMapper _mapeamento;
     private readonly ISalvadorDeDados _salvador;
 
 
-    public RegistroEnfermagemUseCase(IAdicionarProfissionaisSaude adicionar, IMapper mapemanto, ISalvadorDeDados salvador)
+    public RegistroEnfermagem(IAdicionarProfissionaisSaude adicionar, IMapper mapemanto, ISalvadorDeDados salvador)
     {
         _adicionar = adicionar;
         _mapeamento = mapemanto;
@@ -22,6 +22,11 @@ public class RegistroEnfermagemUseCase : IRegistroEnfermagemUseCase
 
     public async Task<RespostaRegistroEnfermagem> Executar(RegistroProfissionaisSaude registro)
     {
+        // Mapeia o registro de entrada para a entidade Profissionais
+        // Adicione o profissional de saúde ao banco de dados
+        // e salve as alterações
+        // Retorna a resposta mapeada
+
         var result = _mapeamento.Map<Profissionais>(registro);
 
         await _adicionar.AddEnfermagem(result);

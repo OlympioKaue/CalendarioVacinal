@@ -1,9 +1,10 @@
 ﻿using VacinasInfantis.Comunicacao.Resposta.Enfermagem;
-using VacinasInfantis.Domain.Entidades;
 
 namespace VacinasInfantis.Aplicacao.UseCase.Enfermagem.ObterProfissionalAplicador;
 
 public interface IObterProfissionalAplicador
 {
-    Task<ProfissionalAplicadorDto> ObterProfissionaisAplicadores(int id);
+    public Task<RespostaProfissionalAplicadorDTO> ObterProfissionaisDeImunizacao(int id);
+   public Task<RespostaProfissionalAplicadorDTO> ObterProfissionais();
+    
 }

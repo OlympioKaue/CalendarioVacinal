@@ -1,6 +1,6 @@
 ﻿namespace VacinasInfantis.Comunicacao.Requisicao.Criancas;
 
-public class RegistroVacinal
+public class RegistrarCriancas
 {
     public string NomeDaCrianca { get; set; } = string.Empty;
     public string NomeDaMae { get; set; } = string.Empty;

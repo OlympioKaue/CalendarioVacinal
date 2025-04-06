@@ -9,14 +9,14 @@ using VacinasInfantis.Comunicacao.Resposta.Vacinas;
 
 namespace VacinasInfantis.API.Controllers;
 
-[Route("Registro/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class VacinasController : ControllerBase
 {
     [HttpPost]
-    [Route("{id}")]
+    [Route("RegistrarVacina,{id}")]
     [ProducesResponseType(typeof(RespostaRegistroVacinas), StatusCodes.Status201Created)]
-    public async Task<IActionResult> RegistrarVacina([FromServices] IRegistroDeVacinasUseCase useCase, [FromBody] RegistroDeVacinas registrar, 
+    public async Task<IActionResult> RegistrarVacina([FromServices] IRegistroDeImunizantes useCase, [FromBody] RegistroDeVacinas registrar, 
         [FromRoute] int id)
     {
       
@@ -27,7 +27,7 @@ public class VacinasController : ControllerBase
 
     [HttpGet("ObterTodasVacinas")]
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
-    public async Task<IActionResult> ObterVacinas([FromServices] IGetVacinasInfantisUseCase useCase)
+    public async Task<IActionResult> ObterVacinas([FromServices] IObterVacinasInfantis useCase)
     {
         var result = await useCase.Execute();
         return Ok(result);
@@ -37,7 +37,7 @@ public class VacinasController : ControllerBase
 
     [HttpGet]
     [Route("VacinasPor{idade}")]
-    [ProducesResponseType(typeof(RespostaCompleta), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(RespostaCompletaDasVacinas), StatusCodes.Status200OK)]
     public async Task<IActionResult> ObterIdadesVacinas([FromServices] IGetVacinasInfantisIdadeUseCase useCase, [FromRoute] long idade)
     {
         var result = await useCase.Execute(idade);
@@ -50,19 +50,21 @@ public class VacinasController : ControllerBase
     }
 
 
-    [HttpGet("VacinasAtuais/VacinasTomadas")]
+    [HttpGet]
+    [Route("VacinasAtuais/VacinasTomadas,{id}")]
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
-    public async Task<IActionResult> VacinasaAtuais([FromServices] IObterVacinasUseCase useCase)
+    public async Task<IActionResult> VacinasaAtuais(int id, [FromServices] IObterVacinasAtuais useCase)
     {
-        var result = await useCase.Execute();
+        var result = await useCase.ObterMesAtual(id);
         return Ok(result);
     }
 
-    [HttpGet("VacinasProximoMês")]
+    [HttpGet]
+    [Route("VacinaProximoMes,{id}")]
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
-    public async Task<IActionResult> VacinasProximoMes([FromServices] IObterVacinasUseCase useCase)
+    public async Task<IActionResult> VacinasProximoMes(int id, [FromServices] IObterVacinasAtuais useCase)
     {
-        var result = await useCase.ObterProximoMes();
+        var result = await useCase.ObterProximoMes(id);
         if(result is null || result.Vacinas.Count is 0)
         {
             return NotFound("Nenhuma vacina encontrada");

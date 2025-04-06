@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace VacinasInfantis.Comunicacao.Resposta.Criancas;
 
-public class RespostaCompleta
+public class RespostaCompletaDasVacinas
 {
     public List<RespostaDeRegistroVacinas> Vacinas { get; set; } = [];
 }

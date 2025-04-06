@@ -1,6 +1,6 @@
 ﻿namespace VacinasInfantis.Comunicacao.Resposta.Criancas;
 
-public class RespostaDeRegistro
+public class RespostaDeRegistroCriancas
 {
     public List<CriancasSalvas> Criancas { get; set; } = [];
 

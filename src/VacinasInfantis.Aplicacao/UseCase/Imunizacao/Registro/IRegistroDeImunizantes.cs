@@ -3,7 +3,7 @@ using VacinasInfantis.Comunicacao.Resposta.Vacinas;
 
 namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.Registro;
 
-public interface IRegistroDeVacinasUseCase
+public interface IRegistroDeImunizantes
 {
     Task<RespostaRegistroVacinas> Executar(int criancasId, RegistroDeVacinas registroDeVacinas);
 }

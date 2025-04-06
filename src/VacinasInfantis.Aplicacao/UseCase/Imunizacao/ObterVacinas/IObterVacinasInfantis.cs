@@ -3,7 +3,7 @@ using VacinasInfantis.Domain.Entidades;
 
 namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinas;
 
-public interface IGetVacinasInfantisUseCase
+public interface IObterVacinasInfantis
 {
     Task<RespostaVacinasInfantis> Execute();
 }

@@ -13,21 +13,19 @@ public class ArquivosMapeados : Profile
 {
     public ArquivosMapeados()
     {
-        Requisicoes();
-        Respostas();
+        Requisicoes(); // faça o mapeamento(dest => entidade)
+        Respostas();  // faça o mapeamento (entidade => dest)
     }
 
     private void Requisicoes()
     {
-        CreateMap<RegistroVacinal, Criancas>();
+        CreateMap<RegistrarCriancas, Criancas>(); 
 
         CreateMap<RegistroDeVacinas, Vacinas>()
         .ForMember(dest => dest.NomeDaVacina, opt => opt.MapFrom(src => src.NomeDaVacina))
         .ForMember(dest => dest.MesAplicacao, opt => opt.MapFrom(src => src.DataDeAplicacao));
+      
        
-
-       
-
         CreateMap<RegistroProfissionaisSaude, Profissionais>()
         .ForMember(dest => dest.NomeProfissional, opt => opt.MapFrom(src => src.Nome))
         .ForMember(dest => dest.RegistroProfissional, opt => opt.MapFrom(src => src.Coren));
@@ -47,7 +45,7 @@ public class ArquivosMapeados : Profile
        .ForMember(dest => dest.DataAplicacao, opt => opt.MapFrom(src => src.MesAplicacao))
        .ForMember(dest => dest.DataAplicacao, opt => opt.MapFrom(src => src.DataAplicacao));
 
-        CreateMap<Criancas, RespostaDeRegistro>();
+        CreateMap<Criancas, RespostaDeRegistroCriancas>();
         CreateMap<Criancas, RespostaSimplificada>();
 
         CreateMap<Profissionais, RespostaRegistroEnfermagem>();
@@ -58,7 +56,6 @@ public class ArquivosMapeados : Profile
        .ForMember(dest => dest.RegistroProfissional, opt => opt.MapFrom(src => src.RegistroProfissional))
        .ForMember(dest => dest.UnidadeSaude, opt => opt.MapFrom(src => src.UnidadeSaude));
            
-       
 
         CreateMap<Criancas, CriancasSalvas>();
           

@@ -6,7 +6,7 @@ using VacinasInfantis.Domain.Repositorios.Interfaces;
 
 namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinas;
 
-public class GetVacinasInfantisUseCase : IGetVacinasInfantisUseCase
+public class GetVacinasInfantisUseCase : IObterVacinasInfantis
 {
     private readonly ILeituraVacinasRepositorio _leitura;
     private readonly IMapper _mapeamento;
@@ -19,7 +19,10 @@ public class GetVacinasInfantisUseCase : IGetVacinasInfantisUseCase
 
     public async Task<RespostaVacinasInfantis> Execute()
     {
-        var result = await _leitura.ObterVacinasCriancas();
+        // Obtem todas as vacinas
+        // Retorne uma lista de vacinas
+
+        var result = await _leitura.ObterTodasVacinas();
 
         return new RespostaVacinasInfantis
         {

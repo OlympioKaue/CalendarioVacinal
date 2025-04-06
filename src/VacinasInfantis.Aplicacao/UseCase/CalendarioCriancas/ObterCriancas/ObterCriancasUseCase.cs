@@ -17,15 +17,18 @@ public class ObterCriancasUseCase : IObterCriancasUseCase
         _criancas = criancas;
     }
 
-    public async Task<RespostaDeRegistro> Execute()
+    public async Task<RespostaDeRegistroCriancas> Execute()
     {
+        // Verifica a lista de criancas, se não houver nenhuma, retorna uma mensagem de erro
+        // Retorne uma lista das criancas registradas
+
         var result = await _criancas.BuscarCriancas();
         if (result is null)
         {
             throw new Exception("Nenhuma criança encontrada");
         }
 
-        return new RespostaDeRegistro
+        return new RespostaDeRegistroCriancas
         {
             Criancas = _mapeamento.Map<List<CriancasSalvas>>(result)
         };
