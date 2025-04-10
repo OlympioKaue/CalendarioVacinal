@@ -22,6 +22,8 @@ public class RegistrosDeCriancas : IRegistrosDeCriancas
 
     public async Task<RespostaDeRegistroCriancas> Execute(RegistrarCriancas registrar)
     {
+        // Primeiro valide os objetos de entrada
+
         // mapear o objeto de entrada para a entidade
         // adicione criancas ao banco de dados
         // e salve as alterações
@@ -46,7 +48,7 @@ public class RegistrosDeCriancas : IRegistrosDeCriancas
         if(resultado.IsValid is false)
         {
             var listaDeErros = resultado.Errors.Select(v => v.ErrorMessage).ToList();
-            throw new ExcecaoModificada(listaDeErros);
+            throw new Excecoes(listaDeErros);
         }
     }
 

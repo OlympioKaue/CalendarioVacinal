@@ -1,6 +1,7 @@
 using VacinasInfantis.Infrastrutura.ExtensaoDependencia;
 using VacinasInfantis.Aplicacao.ExtensaoDependencia;
 using Hangfire;
+using VacinasInfantis.API.FiltroExcecao;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AdicionarRepositorios(builder.Configuration);
 builder.Services.AdicionarAplicacao();
+builder.Services.AddMvc(adicione => adicione.Filters.Add(typeof(FiltroDeExcecao))); // adicione o filtro de exceção
+
 
 
 

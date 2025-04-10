@@ -1,21 +1,29 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using VacinasInfantis.Aplicacao.UseCase.Imunizacao.Validacoes;
 using VacinasInfantis.Comunicacao.Requisicao.Vacinas;
 using VacinasInfantis.Comunicacao.Resposta.Vacinas;
 using VacinasInfantis.Domain.Entidades;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
+using VacinasInfantis.Excecao.BaseDaExcecao;
+using VacinasInfantis.Infrastrutura.DataBaseAcesso;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.Registro;
 
 public class RegistroDeImunizantes : IRegistroDeImunizantes
 {
-     private readonly IVacinasInfantis _adicionar;
+    private readonly IVacinasInfantis _adicionar;
     private readonly IMapper _mapeamento;
     private readonly ISalvadorDeDados _salvador;
     public RegistroDeImunizantes(IVacinasInfantis adicionar, IMapper mapeamento, ISalvadorDeDados salvador)
     {
-        _adicionar = adicionar; 
+        _adicionar = adicionar;
         _mapeamento = mapeamento;
         _salvador = salvador;
+
     }
 
     public async Task<RespostaRegistroVacinas> Executar(int criancasId, RegistroDeVacinas registroDeVacinas)
@@ -28,21 +36,49 @@ public class RegistroDeImunizantes : IRegistroDeImunizantes
         // Retorna a vacina salva
 
 
+
         var entity = _mapeamento.Map<Vacinas>(registroDeVacinas);
+
+        var resultadoValidacao = await ObterResultadoValidacao(registroDeVacinas);
+        Validate(resultadoValidacao);
+
+
         entity.CriancasId = criancasId;
-
-
         await _adicionar.AddVacinas(entity);
 
         await _salvador.Commit();
 
 
-        var vacinaSalva = await _adicionar.BuscarPorId(entity.Id);
-        if (vacinaSalva is null)
-        {
-            throw new Exception("Erro ao salvar a vacina.");
-        }
-        return _mapeamento.Map<RespostaRegistroVacinas>(vacinaSalva);
+        return _mapeamento.Map<RespostaRegistroVacinas>(entity);
 
+    }
+
+    private void Validate(ValidationResult registroDeVacinas)
+    {
+
+
+
+        if (registroDeVacinas.IsValid is false)
+        {
+            var listaDeErro = registroDeVacinas.Errors
+                .Select(v => v.ErrorMessage)
+                .ToList();
+
+            throw new Excecoes(listaDeErro);
+        }
+    }
+
+    private async Task<ValidationResult> ObterResultadoValidacao(RegistroDeVacinas registroDeVacinas)
+    {
+        var validacoes = new ValidarVacinasRegistradas();
+        var resultado = validacoes.Validate(registroDeVacinas);
+        var profissional = await _adicionar.BuscarPorId(registroDeVacinas.ProfissionalSaudeId);
+        
+        if (profissional is null)
+        {
+            resultado.Errors.Add(new ValidationFailure("ProfissionalSaudeId", "O profissional de saúde não existe"));
+        }
+
+        return resultado;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VacinasInfantis.Domain.Entidades;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
+using VacinasInfantis.Excecao.BaseDaExcecao;
 using VacinasInfantis.Infrastrutura.DataBaseAcesso;
 
 namespace VacinasInfantis.Infrastrutura.Repositorios;
@@ -18,18 +19,12 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
 
     public async Task AddVacinas(Vacinas vacinas)
     {
+        
         var criancaExiste = await _dbContext.Criancas.AnyAsync(crianca => crianca.Id == vacinas.CriancasId);
 
         if (criancaExiste is false)
         {
-            throw new Exception("A criança não existe.");
-        }
-
-        var profissionalExiste = await _dbContext.Profissionais.AnyAsync(profissional => profissional.Id == vacinas.ProfissionalSaudeId);
-
-        if (profissionalExiste is false)
-        {
-            throw new Exception("O profissional de saúde não existe.");
+            throw new NaoEncontrado("A criança não foi encontrada");
         }
 
 
@@ -45,9 +40,11 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
         await _dbContext.Vacinas.AddAsync(vacinaCrianca);
     }
 
-    public async Task<List<Vacinas>> ObterVacinasIdade(long idade)
+    public async Task<List<Vacinas>> ObterVacinasIdade(int id)
     {
-        return await _dbContext.Vacinas.AsNoTracking().Where(user => user.MesAplicacao <= idade).ToListAsync();
+        return await _dbContext.Vacinas
+              .Where(v => v.CriancasId == id)
+              .ToListAsync();
     }
 
     public async Task<List<Vacinas>> ObterTodasVacinas()
@@ -60,6 +57,15 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
     {
 
         var hoje = DateTime.Today;
+        bool temVacinasRegistradas = _dbContext.Vacinas.Any(v => v.CriancasId == id);
+        if (temVacinasRegistradas is false)
+        {
+            return Task.FromResult(new List<Vacinas>());
+        }
+
+
+
+
         var criancas = _dbContext.Criancas.Where(v => v.Id == id).AsNoTracking().ToList();
         var vacinasProximas = new List<Vacinas>();
 
@@ -90,6 +96,14 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
     {
 
         var hoje = DateTime.Today;
+
+        bool temVacinasRegistradas = _dbContext.Vacinas.Any(v => v.CriancasId == id);
+        if(temVacinasRegistradas is false)
+        {
+            return Task.FromResult(new List<Vacinas>());
+        }
+
+
         var criancas = _dbContext.Criancas.Where(v => v.Id == id).AsNoTracking().ToList();
         var vacinasProximas = new List<Vacinas>();
 
@@ -109,7 +123,7 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
 
     public async Task<Vacinas?> BuscarPorId(int id)
     {
-        return await _dbContext.Vacinas.FindAsync(id);
+        return await _dbContext.Vacinas.FirstOrDefaultAsync(x => x.ProfissionalSaudeId == id);
     }
 
     public async Task AddCriancas(Criancas criancas)
@@ -125,6 +139,6 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
         return await _dbContext.Criancas.AsNoTracking().ToListAsync();
     }
 
-   
+    
 }
 

@@ -9,5 +9,6 @@ namespace VacinasInfantis.Comunicacao.Resposta.Criancas;
 
 public class RespostaCompletaDasVacinas
 {
+    [JsonPropertyName("Vacinas")]
     public List<RespostaDeRegistroVacinas> Vacinas { get; set; } = [];
 }

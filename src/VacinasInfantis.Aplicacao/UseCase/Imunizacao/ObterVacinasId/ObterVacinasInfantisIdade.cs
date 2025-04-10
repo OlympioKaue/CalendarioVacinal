@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using VacinasInfantis.Comunicacao.Resposta.Criancas;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
+using VacinasInfantis.Excecao.BaseDaExcecao;
 
-namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasIdade;
+namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasId;
 
-public class ObterVacinasInfantisIdade : IGetVacinasInfantisIdadeUseCase
+public class ObterVacinasInfantisIdade : IObterVacinasInfantisIdade
 {
     private readonly ILeituraVacinasRepositorio _leitura;
     private readonly IMapper _mapeamento;
@@ -15,13 +16,17 @@ public class ObterVacinasInfantisIdade : IGetVacinasInfantisIdadeUseCase
         _mapeamento = mapeamento;
     }
 
-    public async Task<RespostaCompletaDasVacinas> Execute(long idade)
+    public async Task<RespostaCompletaDasVacinas> ObterVacinaPorID(int id)
     {
         // Verifica se a idade é válida
         // Idade valida de 0 a 48 meses, equivalente 0 meses a 4 anos.
         // Retorna as vacinas conforme a idade da criança.
 
-        var result = await _leitura.ObterVacinasIdade(idade);
+        var result = await _leitura.ObterVacinasIdade(id);
+        if(result.Count == 0)
+        {
+            throw new NaoEncontrado("Vacina não encontrada");
+        }
 
         return new RespostaCompletaDasVacinas
         {

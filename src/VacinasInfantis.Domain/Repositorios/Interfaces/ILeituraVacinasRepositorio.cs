@@ -7,7 +7,7 @@ public interface ILeituraVacinasRepositorio
     Task<List<Vacinas>> ObterTodasVacinas();
     Task<List<Vacinas>> ObterVacinasAtual(int id);
     Task<List<Vacinas>> ObterVacinasProximoMes(int id);
-    Task<List<Vacinas>> ObterVacinasIdade(long idade);
+    Task<List<Vacinas>> ObterVacinasIdade(int id);
 
 
    

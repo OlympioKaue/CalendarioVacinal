@@ -2,7 +2,7 @@
 
 namespace VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.ObterCriancas;
 
-public interface IObterCriancasUseCase
+public interface IObterCriancasRegistradas
 {
-    Task<RespostaDeRegistroCriancas> Execute();
+    Task<RespostaDeRegistroCriancas> ObterCriancas();
 }

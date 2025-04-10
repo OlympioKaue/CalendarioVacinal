@@ -5,5 +5,5 @@ namespace VacinasInfantis.Aplicacao.UseCase.Enfermagem.Registro;
 
 public interface IRegistroEnfermagem
 {
-    Task<RespostaRegistroEnfermagem> Executar(RegistroProfissionaisSaude registro);
+    Task<RespostaRegistroEnfermagem> RegistrarProfissionaisDaEnfermagem(RegistroProfissionaisSaude registro);
 }

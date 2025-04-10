@@ -5,5 +5,5 @@ namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinas;
 
 public interface IObterVacinasInfantis
 {
-    Task<RespostaVacinasInfantis> Execute();
+    Task<RespostaVacinasInfantis> ObterVacinas();
 }

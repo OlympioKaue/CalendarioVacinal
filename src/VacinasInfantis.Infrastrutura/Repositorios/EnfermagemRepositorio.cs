@@ -2,6 +2,7 @@
 using VacinasInfantis.Comunicacao.Resposta.Enfermagem;
 using VacinasInfantis.Domain.Entidades;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
+using VacinasInfantis.Excecao.BaseDaExcecao;
 using VacinasInfantis.Infrastrutura.DataBaseAcesso;
 
 namespace VacinasInfantis.Infrastrutura.Repositorios;
@@ -29,9 +30,14 @@ internal class EnfermagemRepositorio : IAdicionarProfissionaisSaude, IProfission
        .ToListAsync();
 
 
+
+
         return profissionais.Select(p => new RespostaProfissionaisEnfermagemDTO
         {
-            Id =p.Id,
+
+
+
+            Id = p.Id,
             NomeProfissional = p.NomeProfissional,
             RegistroProfissional = p.RegistroProfissional,
             UnidadeSaude = p.UnidadeSaude,
@@ -44,9 +50,11 @@ internal class EnfermagemRepositorio : IAdicionarProfissionaisSaude, IProfission
                 .ToList()
 
         }).ToList();
+
+
     }
 
-    public async Task<List<RespostaProfissionaisEnfermagemDTO>> ObterProfissionaisDeEnfermagem()
+    public async Task<List<Lalatesteteste>> ObterProfissionaisDeEnfermagem()
     {
         var profissionais = await _dbcontext.Profissionais
        .Include(p => p.Vacinas) // Inclui as vacinas aplicadas
@@ -55,7 +63,7 @@ internal class EnfermagemRepositorio : IAdicionarProfissionaisSaude, IProfission
        .AsNoTracking()
        .ToListAsync();
 
-        return profissionais.Select(p => new RespostaProfissionaisEnfermagemDTO
+        return profissionais.Select(p => new Lalatesteteste
         {
             Id = p.Id,
             NomeProfissional = p.NomeProfissional,

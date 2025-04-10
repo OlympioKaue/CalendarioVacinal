@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace VacinasInfantis.Comunicacao.Resposta.Enfermagem;
 
-public class RespostaProfissionaisEnfermagemDTO
+public class Lalatesteteste
 {
     [JsonPropertyName("ID Do Profissional De Saúde")]
     public int Id { get; set; }
@@ -17,8 +16,5 @@ public class RespostaProfissionaisEnfermagemDTO
     [JsonPropertyName("Unidade De Saúde")]
     public string UnidadeSaude { get; set; } = string.Empty;
 
-
-    [JsonPropertyName("Crianca Vacinada")]
-    public List<CriancaVacinadaProfissional> CriancaVacinada { get; set; } = new(); // Lista de crianças vacinadas
 
 }

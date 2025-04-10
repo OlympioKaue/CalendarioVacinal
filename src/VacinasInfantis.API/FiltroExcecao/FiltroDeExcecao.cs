@@ -22,14 +22,22 @@ public class FiltroDeExcecao : IExceptionFilter
 
     private void ExcecoesConhecidas(ExceptionContext context)
     {
+        var vacinasExcecao =(VacinaisInfantisExcecao)context.Exception;
+        var RespostaDeErro = new RespostaDeErro(vacinasExcecao.ObterErros());
+
+        context.HttpContext.Response.StatusCode = vacinasExcecao.StatusCode;
+        context.Result = new ObjectResult(RespostaDeErro);
+
+        
     }
+    
 
     private void ExcecoesDesconhecidas(ExceptionContext context)
     {
-        var resultado = new RespostaDeErro("Erro Descconheccido - 500");
+        var RespostaDeErro = new RespostaDeErro("Erro Descconheccido - 500");
 
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        context.Result = new ObjectResult(resultado);
+        context.Result = new ObjectResult(RespostaDeErro);
         // ObjectResult pega o resultado e devolve a reposta em HTTP para o usuario.
     }
 

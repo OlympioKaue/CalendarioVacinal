@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinas;
-using VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasIdade;
-using VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasProximas;
+using VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasAtuais_Proximas;
+using VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasId;
 using VacinasInfantis.Aplicacao.UseCase.Imunizacao.Registro;
 using VacinasInfantis.Comunicacao.Requisicao.Vacinas;
 using VacinasInfantis.Comunicacao.Resposta.Criancas;
@@ -29,22 +29,18 @@ public class VacinasController : ControllerBase
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
     public async Task<IActionResult> ObterVacinas([FromServices] IObterVacinasInfantis useCase)
     {
-        var result = await useCase.Execute();
+        var result = await useCase.ObterVacinas();
         return Ok(result);
     }
 
 
 
     [HttpGet]
-    [Route("VacinasPor{idade}")]
+    [Route("VacinasPor{id}")]
     [ProducesResponseType(typeof(RespostaCompletaDasVacinas), StatusCodes.Status200OK)]
-    public async Task<IActionResult> ObterIdadesVacinas([FromServices] IGetVacinasInfantisIdadeUseCase useCase, [FromRoute] long idade)
+    public async Task<IActionResult> ObterIdadesVacinas([FromServices] IObterVacinasInfantisIdade useCase, [FromRoute] int id)
     {
-        var result = await useCase.Execute(idade);
-        if (result is null)
-        {
-            return NotFound(new { message = "Erro ao localizar" });
-        }
+        var result = await useCase.ObterVacinaPorID(id);
 
         return Ok(result);
     }
@@ -53,7 +49,7 @@ public class VacinasController : ControllerBase
     [HttpGet]
     [Route("VacinasAtuais/VacinasTomadas,{id}")]
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
-    public async Task<IActionResult> VacinasaAtuais(int id, [FromServices] IObterVacinasAtuais useCase)
+    public async Task<IActionResult> VacinasaAtuais(int id, [FromServices] IObterVacinasAtuais_Proximas useCase)
     {
         var result = await useCase.ObterMesAtual(id);
         return Ok(result);
@@ -62,13 +58,9 @@ public class VacinasController : ControllerBase
     [HttpGet]
     [Route("VacinaProximoMes,{id}")]
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
-    public async Task<IActionResult> VacinasProximoMes(int id, [FromServices] IObterVacinasAtuais useCase)
+    public async Task<IActionResult> VacinasProximoMes(int id, [FromServices] IObterVacinasAtuais_Proximas useCase)
     {
         var result = await useCase.ObterProximoMes(id);
-        if(result is null || result.Vacinas.Count is 0)
-        {
-            return NotFound("Nenhuma vacina encontrada");
-        }
 
         return Ok(result);
     }

@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using VacinasInfantis.Comunicacao.Resposta.Enfermagem;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
+using VacinasInfantis.Excecao.BaseDaExcecao;
 
-namespace VacinasInfantis.Aplicacao.UseCase.Enfermagem.ObterProfissionalAplicador;
+namespace VacinasInfantis.Aplicacao.UseCase.Enfermagem.ObterProfissionalAplicadorID;
 
 public class ObterProfissionalAplicador : IObterProfissionalAplicador
 {
@@ -15,16 +16,20 @@ public class ObterProfissionalAplicador : IObterProfissionalAplicador
         _mapper = mapper;
     }
 
-    public async Task<RespostaProfissionalAplicadorDTO> ObterProfissionais()
+    public async Task<ApenasTestelista> ObterProfissionais()
     {
         // Busca todos os profissionais aplicadores
         // Retorne em uma lista todos os profissionais de enfermagem
 
         var aplicadores = await _servico.ObterProfissionaisDeEnfermagem();
-
-        return new RespostaProfissionalAplicadorDTO
+        if (aplicadores is null)
         {
-            Enfermagem = _mapper.Map<List<RespostaProfissionaisEnfermagemDTO>>(aplicadores)
+            throw new NaoEncontrado("Profissional não encontrado");
+        }
+
+        return new ApenasTestelista
+        {
+            OutroTeste = _mapper.Map<List<Lalatesteteste>>(aplicadores)
         };
     }
 
@@ -36,11 +41,18 @@ public class ObterProfissionalAplicador : IObterProfissionalAplicador
         // Mapeia o resultado para o DTO
 
         var aplicadores = await _servico.ObterProfissionaisAplicadores();
-        aplicadores = aplicadores.Where(x => x.Id == id).ToList();
+        if (!aplicadores.Any(x => x.Id == id))
+        {
+            throw new NaoEncontrado("Profissional não encontrado");
+        }
+            
+
+        var AplicadoresFiltrados = aplicadores.Where(x => x.Id == id).ToList();
+      
 
         return new RespostaProfissionalAplicadorDTO
         {
-            Enfermagem = _mapper.Map<List<RespostaProfissionaisEnfermagemDTO>>(aplicadores)
+            Enfermagem = _mapper.Map<List<RespostaProfissionaisEnfermagemDTO>>(AplicadoresFiltrados)
         };
     }
 }
