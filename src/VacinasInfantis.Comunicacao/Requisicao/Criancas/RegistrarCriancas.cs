@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace VacinasInfantis.Comunicacao.Requisicao.Criancas;
 
@@ -15,5 +16,9 @@ public class RegistrarCriancas
 
     [JsonPropertyName("Data De Nascimento Da Criança")]
     public DateTime DataDeNascimentoDaCrianca { get; set; }
+
+    [Required]
+    public string EmailResponsavel { get; set; } = string.Empty;
+
 
 }

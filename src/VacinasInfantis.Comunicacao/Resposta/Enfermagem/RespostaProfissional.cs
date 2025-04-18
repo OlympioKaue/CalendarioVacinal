@@ -2,7 +2,7 @@
 
 namespace VacinasInfantis.Comunicacao.Resposta.Enfermagem;
 
-public class Lalatesteteste
+public class RespostaProfissional
 {
     [JsonPropertyName("ID Do Profissional De Saúde")]
     public int Id { get; set; }

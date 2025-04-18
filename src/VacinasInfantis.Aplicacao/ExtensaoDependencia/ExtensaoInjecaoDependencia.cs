@@ -34,6 +34,11 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<IRegistroEnfermagem, RegistroEnfermagem>();
         services.AddScoped<IObterProfissionalAplicador, ObterProfissionalAplicador>();
         services.AddScoped<IObterCriancasRegistradas, ObterCriancasRegistradas>();
+    
+       
+
+
+
 
         // Extensão de Injeção de Dependência //
 

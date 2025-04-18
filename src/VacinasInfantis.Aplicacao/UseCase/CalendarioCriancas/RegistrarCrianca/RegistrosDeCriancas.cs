@@ -20,7 +20,7 @@ public class RegistrosDeCriancas : IRegistrosDeCriancas
         _salvadorDeDados = salvadorDeDados;
     }
 
-    public async Task<RespostaDeRegistroCriancas> Execute(RegistrarCriancas registrar)
+    public async Task<CriancasSalvas> Execute(RegistrarCriancas registrar)
     {
         // Primeiro valide os objetos de entrada
 
@@ -37,7 +37,7 @@ public class RegistrosDeCriancas : IRegistrosDeCriancas
 
         await _salvadorDeDados.Commit();
 
-        return _mapeamento.Map<RespostaDeRegistroCriancas>(entity);
+        return _mapeamento.Map<CriancasSalvas>(entity);
     }
 
     private void ValidarCrianca(RegistrarCriancas registrar)

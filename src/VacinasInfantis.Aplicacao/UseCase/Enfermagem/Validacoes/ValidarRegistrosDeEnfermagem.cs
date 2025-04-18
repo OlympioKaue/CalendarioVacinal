@@ -16,7 +16,7 @@ public class ValidarRegistrosDeEnfermagem : AbstractValidator<RegistroProfission
         RuleFor(enfermagem => enfermagem.Coren.ToString().Length)
             .NotEmpty()
             .WithMessage("O registro é obrigatório")
-          .Must(coren => coren >= 0 && coren.ToString().Length == 7) // tava (&&), se não der coloca (||)
+          .Must(coren => coren >= 0 || coren.ToString().Length == 7) // tava (&&), se não der coloca (||)
             .WithMessage("O registro deve ter exatamente 7 dígitos.");
 
        RuleFor(enfermagem => enfermagem.UnidadeSaude)

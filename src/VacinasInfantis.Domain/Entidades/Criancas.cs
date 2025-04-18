@@ -20,6 +20,10 @@ public class Criancas
     [Required]
     public string NomeDoPai { get; set; } = string.Empty;
 
+    [Required]
+    public string EmailResponsavel { get; set; } = string.Empty;
+  
+
     // Relacionamento com vacinas tomadas pela criança
     public List<Vacinas> Vacinas { get; set; } = new();
 

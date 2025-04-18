@@ -30,12 +30,8 @@ internal class EnfermagemRepositorio : IAdicionarProfissionaisSaude, IProfission
        .ToListAsync();
 
 
-
-
         return profissionais.Select(p => new RespostaProfissionaisEnfermagemDTO
         {
-
-
 
             Id = p.Id,
             NomeProfissional = p.NomeProfissional,
@@ -54,16 +50,12 @@ internal class EnfermagemRepositorio : IAdicionarProfissionaisSaude, IProfission
 
     }
 
-    public async Task<List<Lalatesteteste>> ObterProfissionaisDeEnfermagem()
+    public async Task<List<RespostaProfissional>> ObterProfissionaisDeEnfermagem()
     {
-        var profissionais = await _dbcontext.Profissionais
-       .Include(p => p.Vacinas) // Inclui as vacinas aplicadas
-       .ThenInclude(vc => vc.Crianca)  // Inclui as crianças vacinadas
-       .Where(p => p.Vacinas.Any()) // Retorna apenas profissionais que aplicaram vacinas
-       .AsNoTracking()
-       .ToListAsync();
 
-        return profissionais.Select(p => new Lalatesteteste
+        var profissionais = await _dbcontext.Profissionais.AsNoTracking().ToListAsync();
+
+        return profissionais.Select(p => new RespostaProfissional
         {
             Id = p.Id,
             NomeProfissional = p.NomeProfissional,

@@ -22,6 +22,26 @@ namespace VacinasInfantis.API.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("VacinasInfantis.Domain.Entidades.CalendarioDeVacinas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<long>("MesAplicacao")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("NomeDaVacina")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CalendarioDeVacinas");
+                });
+
             modelBuilder.Entity("VacinasInfantis.Domain.Entidades.Criancas", b =>
                 {
                     b.Property<int>("Id")

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Twilio.Rest.Trunking.V1;
 using VacinasInfantis.Domain.Entidades;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
 using VacinasInfantis.Excecao.BaseDaExcecao;
@@ -19,7 +20,7 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
 
     public async Task AddVacinas(Vacinas vacinas)
     {
-        
+
         var criancaExiste = await _dbContext.Criancas.AnyAsync(crianca => crianca.Id == vacinas.CriancasId);
 
         if (criancaExiste is false)
@@ -47,83 +48,99 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
               .ToListAsync();
     }
 
-    public async Task<List<Vacinas>> ObterTodasVacinas()
+    public async Task<List<CalendarioDeVacinas>> ObterTodasVacinas()
     {
-        return await _dbContext.Vacinas.AsNoTracking().ToListAsync();
+        return await _dbContext.CalendarioDeVacinas.AsNoTracking().ToListAsync();
     }
 
 
-    public Task<List<Vacinas>> ObterVacinasAtual(int id)
+    public async Task<List<Vacinas>> ObterVacinasAtual(int id)
     {
 
         var hoje = DateTime.Today;
         bool temVacinasRegistradas = _dbContext.Vacinas.Any(v => v.CriancasId == id);
         if (temVacinasRegistradas is false)
         {
-            return Task.FromResult(new List<Vacinas>());
+            return new List<Vacinas>();
+        }
+
+        var criancas = await _dbContext.Criancas.Where(v => v.Id == id)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(v => v.Id == id);
+        if(criancas is null)
+        {
+            return new List<Vacinas>();
         }
 
 
-
-
-        var criancas = _dbContext.Criancas.Where(v => v.Id == id).AsNoTracking().ToList();
-        var vacinasProximas = new List<Vacinas>();
-
-
-        foreach (var obj in criancas)
+        var diaDeNascimento = new DateTime(hoje.Year, hoje.Month, criancas.DataDeNascimentoDaCrianca.Day);
+        if (hoje.Day > criancas.DataDeNascimentoDaCrianca.Day || hoje.Day < 30)
         {
-            int idadeMeses = ((hoje.Year - obj.DataDeNascimentoDaCrianca.Year) * 12) + (hoje.Month - obj.DataDeNascimentoDaCrianca.Month);
+            // Idade em meses
+            int idadeMeses = ((hoje.Year - criancas.DataDeNascimentoDaCrianca.Year) * 12) + (hoje.Month - criancas.DataDeNascimentoDaCrianca.Month);
 
             // Vacina Mês Atual
             var vacinaMesAtual = _dbContext.Vacinas.Include(v => v.ProfissionalSaude).Where(v => v.MesAplicacao == idadeMeses).ToList();
-           
-
-            vacinasProximas.AddRange(vacinaMesAtual);
 
 
-
-
+           return vacinaMesAtual;
         }
 
 
-
-
-        return Task.FromResult(vacinasProximas);
+        return new List<Vacinas>();
 
     }
 
-    public Task<List<Vacinas>> ObterVacinasProximoMes(int id)
+    public async Task<List<CalendarioDeVacinas>> ObterVacinasProximoMes(int id)
     {
 
         var hoje = DateTime.Today;
 
-        bool temVacinasRegistradas = _dbContext.Vacinas.Any(v => v.CriancasId == id);
-        if(temVacinasRegistradas is false)
+        bool temCriancaRegistrada = _dbContext.Criancas.Any(v => v.Id == id);
+        if (temCriancaRegistrada is false)
         {
-            return Task.FromResult(new List<Vacinas>());
+            return new List<CalendarioDeVacinas>();
         }
 
 
-        var criancas = _dbContext.Criancas.Where(v => v.Id == id).AsNoTracking().ToList();
-        var vacinasProximas = new List<Vacinas>();
-
-        foreach (var obj in criancas)
+        var crianca = await _dbContext.Criancas
+            .AsNoTracking()
+            .FirstOrDefaultAsync(v => v.Id == id);
+        if (crianca is null)
         {
-            int idadeMeses = ((hoje.Year - obj.DataDeNascimentoDaCrianca.Year) * 12) + (hoje.Month - obj.DataDeNascimentoDaCrianca.Month);
+            return new List<CalendarioDeVacinas>();
+        }
+
+
+
+        var diaDeNascimento = new DateTime(hoje.Year, hoje.Month, crianca.DataDeNascimentoDaCrianca.Day);
+        if (hoje.Day >= crianca.DataDeNascimentoDaCrianca.Day)
+        {
+            diaDeNascimento = diaDeNascimento.AddMonths(1);
+        }
+
+        int diasRestantes = (diaDeNascimento - hoje).Days;
+        if (diasRestantes >= 1 || diasRestantes <= 31) //Dia 29 de cada mês avise
+        {
+
+
+            //Calcule a idade em meses
+            int idadeMeses = ((hoje.Year - crianca.DataDeNascimentoDaCrianca.Year) * 12) + (hoje.Month - crianca.DataDeNascimentoDaCrianca.Month);
 
             // Vacina Mês Seguinte
-            var VacinaMesSeguinte = _dbContext.Vacinas.Include(v => v.ProfissionalSaude).Where(v => v.MesAplicacao == idadeMeses + 1).ToList();
+            var VacinaMesSeguinte = _dbContext.CalendarioDeVacinas.Where(v => v.MesAplicacao == idadeMeses + 1).ToList();
 
-            vacinasProximas.AddRange(VacinaMesSeguinte);
-
+            return VacinaMesSeguinte;
         }
 
-        return Task.FromResult(vacinasProximas);
+
+        return new List<CalendarioDeVacinas>();
+
     }
 
-    public async Task<Vacinas?> BuscarPorId(int id)
+    public async Task<Profissionais?> BuscarPorId(int id)
     {
-        return await _dbContext.Vacinas.FirstOrDefaultAsync(x => x.ProfissionalSaudeId == id);
+        return await _dbContext.Profissionais.Include(v => v.Vacinas).FirstOrDefaultAsync(v => v.Id == id);
     }
 
     public async Task AddCriancas(Criancas criancas)
@@ -139,6 +156,9 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
         return await _dbContext.Criancas.AsNoTracking().ToListAsync();
     }
 
-    
+
+
+
 }
+
 

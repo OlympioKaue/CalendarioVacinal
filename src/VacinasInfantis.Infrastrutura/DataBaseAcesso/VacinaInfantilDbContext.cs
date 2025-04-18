@@ -12,6 +12,7 @@ public class VacinaInfantilDbContext : DbContext
     public DbSet<Criancas> Criancas { get; set; }
     public DbSet<Vacinas> Vacinas { get; set; }
     public DbSet<Profissionais> Profissionais { get; set; }
+    public DbSet<CalendarioDeVacinas> CalendarioDeVacinas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

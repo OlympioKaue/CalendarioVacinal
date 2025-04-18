@@ -12,8 +12,8 @@ using VacinasInfantis.Infrastrutura.DataBaseAcesso;
 namespace VacinasInfantis.API.Migrations
 {
     [DbContext(typeof(VacinaInfantilDbContext))]
-    [Migration("20250404135058_Inicializacao")]
-    partial class Inicializacao
+    [Migration("20250415052120_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,26 @@ namespace VacinasInfantis.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("VacinasInfantis.Domain.Entidades.CalendarioDeVacinas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<long>("MesAplicacao")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("NomeDaVacina")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CalendarioDeVacinas");
+                });
 
             modelBuilder.Entity("VacinasInfantis.Domain.Entidades.Criancas", b =>
                 {

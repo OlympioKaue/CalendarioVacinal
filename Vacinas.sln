@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacinasInfantis.API", "src\VacinasInfantis.API\VacinasInfantis.API.csproj", "{73927750-B7FC-433E-9FBE-D7B3CFBA0B09}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacinasInfantis.Excecao", "src\VacinasInfantis.Excecao\VacinasInfantis.Excecao.csproj", "{4C7A95CF-50EA-40DC-9437-25573079E28C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacinasInfantis.Infrastrutura", "src\VacinasInfantis.Infrastrutura\VacinasInfantis.Infrastrutura.csproj", "{9DFA7F65-ACE6-418B-9743-7C52A9F85A3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestesUnitarios", "testes\TestesUnitarios\TestesUnitarios.csproj", "{5D48DAE6-C8B0-4F6B-A5E5-57DB6127DC03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequisicoesCriancas", "testes\RequisicoesCriancas\RequisicoesCriancas\RequisicoesCriancas.csproj", "{CAD95446-ABC5-4315-B6E2-66CB74FBE6A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,14 @@ Global
 		{9DFA7F65-ACE6-418B-9743-7C52A9F85A3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DFA7F65-ACE6-418B-9743-7C52A9F85A3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DFA7F65-ACE6-418B-9743-7C52A9F85A3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D48DAE6-C8B0-4F6B-A5E5-57DB6127DC03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D48DAE6-C8B0-4F6B-A5E5-57DB6127DC03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D48DAE6-C8B0-4F6B-A5E5-57DB6127DC03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D48DAE6-C8B0-4F6B-A5E5-57DB6127DC03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAD95446-ABC5-4315-B6E2-66CB74FBE6A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAD95446-ABC5-4315-B6E2-66CB74FBE6A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAD95446-ABC5-4315-B6E2-66CB74FBE6A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAD95446-ABC5-4315-B6E2-66CB74FBE6A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +72,8 @@ Global
 		{D238B773-40C5-4231-83D7-DE4E5E4BFAAB} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{4C7A95CF-50EA-40DC-9437-25573079E28C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{9DFA7F65-ACE6-418B-9743-7C52A9F85A3A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{5D48DAE6-C8B0-4F6B-A5E5-57DB6127DC03} = {E9434DCB-DD2F-45B3-ACCC-F17286437486}
+		{CAD95446-ABC5-4315-B6E2-66CB74FBE6A1} = {E9434DCB-DD2F-45B3-ACCC-F17286437486}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8603CAF1-123D-441A-BA3D-3670CBE39BB1}

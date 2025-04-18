@@ -13,15 +13,16 @@ namespace VacinasInfantis.API.Controllers;
 [ApiController]
 public class VacinasController : ControllerBase
 {
+
     [HttpPost]
     [Route("RegistrarVacina,{id}")]
     [ProducesResponseType(typeof(RespostaRegistroVacinas), StatusCodes.Status201Created)]
-    public async Task<IActionResult> RegistrarVacina([FromServices] IRegistroDeImunizantes useCase, [FromBody] RegistroDeVacinas registrar, 
+    public async Task<IActionResult> RegistrarVacina([FromServices] IRegistroDeImunizantes useCase, [FromBody] RegistroDeVacinas registrar,
         [FromRoute] int id)
     {
-      
+
         var result = await useCase.Executar(id, registrar);
-        return Created(" ", result);
+        return Created(string.Empty, result);
     }
 
 
@@ -36,7 +37,7 @@ public class VacinasController : ControllerBase
 
 
     [HttpGet]
-    [Route("VacinasPor{id}")]
+    [Route("ObterVacinasCom{id}")]
     [ProducesResponseType(typeof(RespostaCompletaDasVacinas), StatusCodes.Status200OK)]
     public async Task<IActionResult> ObterIdadesVacinas([FromServices] IObterVacinasInfantisIdade useCase, [FromRoute] int id)
     {
@@ -60,8 +61,11 @@ public class VacinasController : ControllerBase
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
     public async Task<IActionResult> VacinasProximoMes(int id, [FromServices] IObterVacinasAtuais_Proximas useCase)
     {
+      
         var result = await useCase.ObterProximoMes(id);
 
         return Ok(result);
     }
+
+
 }

@@ -20,14 +20,14 @@ public class EnfermagemController : ControllerBase
     } 
 
     [HttpGet("BuscarProfissionalEnfermagem")]
-    [ProducesResponseType(typeof(ApenasTestelista), (StatusCodes.Status200OK))]
+    [ProducesResponseType(typeof(RespostaProfissional), (StatusCodes.Status200OK))]
     public async Task<IActionResult> ObterProfissionaisDeEnfermagem([FromServices] IObterProfissionalAplicador useCase)
     {
         var result = await useCase.ObterProfissionais();
         return Ok(result);
     }
 
-    [HttpGet("BuscarProfissionalEnfermagem,{id}")]
+    [HttpGet("BuscarProfissionalEnfermagemAplicador,{id}")]
     [ProducesResponseType(typeof(RespostaProfissionalAplicadorDTO), (StatusCodes.Status200OK))]
     public async Task<IActionResult> ObterProfissionaisAplicador(int id, [FromServices] IObterProfissionalAplicador useCase)
     {

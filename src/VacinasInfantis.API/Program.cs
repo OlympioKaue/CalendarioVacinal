@@ -2,6 +2,7 @@ using VacinasInfantis.Infrastrutura.ExtensaoDependencia;
 using VacinasInfantis.Aplicacao.ExtensaoDependencia;
 using Hangfire;
 using VacinasInfantis.API.FiltroExcecao;
+using VacinasInfantis.Infrastrutura.ServicoEmail;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ builder.Services.AdicionarRepositorios(builder.Configuration);
 builder.Services.AdicionarAplicacao();
 builder.Services.AddMvc(adicione => adicione.Filters.Add(typeof(FiltroDeExcecao))); // adicione o filtro de exceção
 
-
+builder.Services.Configure<ConfiguracaoEmail>(builder.Configuration.GetSection("ConfiguracaoEmail"));
 
 
 var app = builder.Build();

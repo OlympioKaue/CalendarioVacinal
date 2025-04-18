@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
 using VacinasInfantis.Infrastrutura.DataBaseAcesso;
 using VacinasInfantis.Infrastrutura.Repositorios;
+using VacinasInfantis.Infrastrutura.ServicoEmail;
 
 namespace VacinasInfantis.Infrastrutura.ExtensaoDependencia;
 
@@ -31,6 +32,7 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<ISalvadorDeDados, SalvarRepositorio>();
         services.AddScoped<IAdicionarProfissionaisSaude, EnfermagemRepositorio>();
         services.AddScoped<IProfissionalSaudeServico, EnfermagemRepositorio>();
+        services.AddScoped<IEmailService, EmailService>();
 
 
         // Extensão de Injeção de Dependência para o repositório 
@@ -45,6 +47,7 @@ public static class ExtensaoInjecaoDependencia
         var conexao = configuration.GetConnectionString("DefaultConnection");
         var versaoMySql = new MySqlServerVersion(new Version(8, 0, 41));
 
+        
 
         services.AddDbContext<VacinaInfantilDbContext>(vacina =>
          vacina.UseMySql(conexao, versaoMySql, vacina => vacina.MigrationsAssembly("VacinasInfantis.API")))

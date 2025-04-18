@@ -16,20 +16,20 @@ public class ObterProfissionalAplicador : IObterProfissionalAplicador
         _mapper = mapper;
     }
 
-    public async Task<ApenasTestelista> ObterProfissionais()
+    public async Task<RepostaDeListaProfissional> ObterProfissionais()
     {
         // Busca todos os profissionais aplicadores
         // Retorne em uma lista todos os profissionais de enfermagem
 
         var aplicadores = await _servico.ObterProfissionaisDeEnfermagem();
-        if (aplicadores is null)
+        if (aplicadores is null || aplicadores.Count == 0)
         {
             throw new NaoEncontrado("Profissional não encontrado");
         }
 
-        return new ApenasTestelista
+        return new RepostaDeListaProfissional
         {
-            OutroTeste = _mapper.Map<List<Lalatesteteste>>(aplicadores)
+            Profissional = _mapper.Map<List<RespostaProfissional>>(aplicadores)
         };
     }
 
@@ -43,7 +43,7 @@ public class ObterProfissionalAplicador : IObterProfissionalAplicador
         var aplicadores = await _servico.ObterProfissionaisAplicadores();
         if (!aplicadores.Any(x => x.Id == id))
         {
-            throw new NaoEncontrado("Profissional não encontrado");
+            throw new NaoEncontrado("Profissional não encontrado, digite correto o ID do Profissional de Saúde !");
         }
             
 

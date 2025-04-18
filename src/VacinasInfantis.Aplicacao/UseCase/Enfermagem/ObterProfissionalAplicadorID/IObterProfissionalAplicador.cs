@@ -5,6 +5,6 @@ namespace VacinasInfantis.Aplicacao.UseCase.Enfermagem.ObterProfissionalAplicado
 public interface IObterProfissionalAplicador
 {
     public Task<RespostaProfissionalAplicadorDTO> ObterProfissionaisDeImunizacao(int id);
-   public Task<ApenasTestelista> ObterProfissionais();
+   public Task<RepostaDeListaProfissional> ObterProfissionais();
     
 }

@@ -14,13 +14,12 @@ public class ValidarVacinasRegistradas : AbstractValidator<RegistroDeVacinas>
         RuleFor(vacina => vacina.NomeDaVacina)
             .NotEmpty()
             .WithMessage("O nome da vacina é obrigatório")
-            .Length(2, 50)
+            .Length(2, 100)
             .WithMessage("O nome da vacina deve ter entre 2 a 50 caractere");
 
         RuleFor(vacina => vacina.DataDeAplicacao)
-            .NotEmpty()
-            .WithMessage("O mês de aplicação é obrigatória")
-            .Must(vacina => vacina >= 0 && vacina.ToString().Length == 2 || vacina.ToString().Length == 1)
+           
+            .Must(vacina => vacina >= 0 || vacina.ToString().Length == 2 || vacina.ToString().Length == 1)
             .WithMessage("O mês de aplicação deve entre igual ou maior que 0 meses, os digitos deve ter entre 1 a 2 caracteres");
 
         RuleFor(vacina => vacina.DataAplicacao)

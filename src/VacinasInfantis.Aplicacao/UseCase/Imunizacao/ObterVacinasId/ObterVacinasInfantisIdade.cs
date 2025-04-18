@@ -25,7 +25,7 @@ public class ObterVacinasInfantisIdade : IObterVacinasInfantisIdade
         var result = await _leitura.ObterVacinasIdade(id);
         if(result.Count == 0)
         {
-            throw new NaoEncontrado("Vacina não encontrada");
+            throw new NaoEncontrado("Vacina não encontrada, digite novamente o ID da Criança");
         }
 
         return new RespostaCompletaDasVacinas

@@ -6,5 +6,5 @@ namespace VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.RegistrarCrianca;
 
 public interface IRegistrosDeCriancas
 {
-    Task<RespostaDeRegistroCriancas> Execute(RegistrarCriancas registrar);
+    Task<CriancasSalvas> Execute(RegistrarCriancas registrar);
 }

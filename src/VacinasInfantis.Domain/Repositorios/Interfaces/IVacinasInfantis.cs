@@ -12,5 +12,5 @@ public interface IVacinasInfantis
     Task AddVacinas(Vacinas vacinas);
     Task AddCriancas(Criancas criancas);
     Task<List<Criancas>> BuscarCriancas();
-    Task <Vacinas?>BuscarPorId(int id);
+    Task <Profissionais?>BuscarPorId(int id);
 }

@@ -6,6 +6,6 @@ namespace VacinasInfantis.Domain.Repositorios.Interfaces;
 public interface IProfissionalSaudeServico
 {
     Task<List<RespostaProfissionaisEnfermagemDTO>> ObterProfissionaisAplicadores();
-    Task<List<Lalatesteteste>> ObterProfissionaisDeEnfermagem();
+    Task<List<RespostaProfissional>> ObterProfissionaisDeEnfermagem();
     
 }
