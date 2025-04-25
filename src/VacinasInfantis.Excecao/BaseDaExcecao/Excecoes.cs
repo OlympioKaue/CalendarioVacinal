@@ -13,6 +13,11 @@ public class Excecoes : VacinaisInfantisExcecao
         _erroDeExcecaoModificada = erros;
     }
 
+    public Excecoes(string erro) : base(erro)
+    {
+        _erroDeExcecaoModificada = new List<string> { erro };
+    }
+
     public override int StatusCode => (int)HttpStatusCode.BadRequest;
 
     public override List<string> ObterErros()

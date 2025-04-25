@@ -19,7 +19,7 @@ public class ArquivosMapeados : Profile
 
     private void Requisicoes()
     {
-        CreateMap<RegistrarCriancas, Criancas>();
+        CreateMap<InfantilCriancas, Criancas>();
 
         CreateMap<RegistroDeVacinas, Vacinas>()
         .ForMember(dest => dest.NomeDaVacina, opt => opt.MapFrom(src => src.NomeDaVacina))
@@ -47,7 +47,7 @@ public class ArquivosMapeados : Profile
        .ForMember(dest => dest.DataAplicacao, opt => opt.MapFrom(src => src.DataAplicacao));
 
         CreateMap<Criancas, RespostaDeRegistroCriancas>();
-           
+
         CreateMap<Criancas, RespostaSimplificada>();
 
         CreateMap<Vacinas, RespostaSimplificada>();

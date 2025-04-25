@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Twilio.Rest.Trunking.V1;
 using VacinasInfantis.Domain.Entidades;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
@@ -149,6 +150,11 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
 
     }
 
+    public void AtualizarCriancas(Criancas criancas)    
+    { 
+     
+        _dbContext.Criancas.Update(criancas);
+    }
 
 
     public async Task<List<Criancas>> BuscarCriancas()
@@ -156,9 +162,15 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
         return await _dbContext.Criancas.AsNoTracking().ToListAsync();
     }
 
+    public async Task<Criancas?> BuscarCriancaPorId(long id)
+    {
+        return await _dbContext.Criancas.AsNoTracking().FirstOrDefaultAsync(v => v.Id == id);
+    }
 
-
-
+    public void DeletarCrianca(Criancas criancas)
+    {
+        _dbContext.Criancas.Remove(criancas);
+    }
 }
 
 

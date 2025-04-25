@@ -1,4 +1,4 @@
-﻿    using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using VacinasInfantis.Comunicacao.Resposta.Criancas;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
@@ -11,16 +11,18 @@ public class ObterVacinasAtuais_Proximas : IObterVacinasAtuais_Proximas
 {
     private readonly ILeituraVacinasRepositorio _leituraVacinas;
     private readonly IMapper _mapeamento;
-    private readonly IEmailService _email;
-    private readonly VacinaInfantilDbContext _dbContext;
+    private readonly IServicoDeEmailRepositorio _email;
 
 
-    public ObterVacinasAtuais_Proximas(ILeituraVacinasRepositorio leituraVacinas, IMapper mapeamento, IEmailService email, VacinaInfantilDbContext dbContext)
+
+
+    public ObterVacinasAtuais_Proximas(ILeituraVacinasRepositorio leituraVacinas, IMapper mapeamento, IServicoDeEmailRepositorio email)
     {
         _leituraVacinas = leituraVacinas;
         _mapeamento = mapeamento;
         _email = email;
-        _dbContext = dbContext;
+        
+
     }
 
     public async Task<RespostaVacinasInfantis> ObterMesAtual(int id)
@@ -34,7 +36,6 @@ public class ObterVacinasAtuais_Proximas : IObterVacinasAtuais_Proximas
         {
             throw new NaoEncontrado("Nenhuma vacina encontrada para essa criança");
         }
-
 
 
         return new RespostaVacinasInfantis
@@ -56,24 +57,8 @@ public class ObterVacinasAtuais_Proximas : IObterVacinasAtuais_Proximas
             throw new NaoEncontrado("Nenhuma vacina encontrada para essa criança");
         }
 
-        var Crianca = await _dbContext.Criancas
-            .AsNoTracking().FirstAsync();
+        await _email.ExecutarNotificacao(id);
 
-        var hoje = DateTime.Now.Month;
-        
-        
-
-        var enviado = await _email.EnviaEmailParaResponsavel(id, "Lembrete De Vacinas",
-              $"Olá Responsável pela criança {Crianca.NomeDaCrianca}, Estamos enviando" +
-              $" um email para relembrar que a criança tem vacinas para o dia " +
-              $"{Crianca.DataDeNascimentoDaCrianca.Day:D2}/{hoje:D2} , Não se esqueça dessa data, " +
-              $"em caso de esquecimento comparecer a unidade de Saúde.");
-
-
-        if (enviado is false)
-        {
-            throw new NaoEncontrado("Erro ao enviar o email");
-        }
         return new RespostaVacinasInfantis
         {
             Vacinas = _mapeamento.Map<List<RespostaSimplificada>>(result)

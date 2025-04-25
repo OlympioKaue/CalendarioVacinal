@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
 using VacinasInfantis.Infrastrutura.DataBaseAcesso;
 using VacinasInfantis.Infrastrutura.Repositorios;
-using VacinasInfantis.Infrastrutura.ServicoEmail;
+
 
 namespace VacinasInfantis.Infrastrutura.ExtensaoDependencia;
 
@@ -18,8 +19,6 @@ public static class ExtensaoInjecaoDependencia
 
         AdicionarConexaoBancoDados(services, configuracao);
 
-      
-
 
     }
 
@@ -32,14 +31,16 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<ISalvadorDeDados, SalvarRepositorio>();
         services.AddScoped<IAdicionarProfissionaisSaude, EnfermagemRepositorio>();
         services.AddScoped<IProfissionalSaudeServico, EnfermagemRepositorio>();
-        services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IServicoDeEmailRepositorio, ServicoDeEmailRepositorio>();
+       
+
 
 
         // Extensão de Injeção de Dependência para o repositório 
 
 
     }
-
+        
 
 
     private static void AdicionarConexaoBancoDados(this IServiceCollection services, IConfiguration configuration)
@@ -53,11 +54,7 @@ public static class ExtensaoInjecaoDependencia
          vacina.UseMySql(conexao, versaoMySql, vacina => vacina.MigrationsAssembly("VacinasInfantis.API")))
         ;
 
-       
-
-
     }
 
-
-
+ 
 }

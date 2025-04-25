@@ -10,20 +10,22 @@ public class ValidarRegistrosDeEnfermagem : AbstractValidator<RegistroProfission
         RuleFor(enfermagem => enfermagem.Nome)
             .NotEmpty()
             .WithMessage("O nome do enfermeiro é obrigatório")
-            .Length(2, 50)
-            .WithMessage("O nome do enfermeiro deve ter entre 2 e 50 caracteres.");
+            .Length(7, 50)
+            .WithMessage("O nome do enfermeiro deve ter entre 7 e 50 caracteres.");
 
-        RuleFor(enfermagem => enfermagem.Coren.ToString().Length)
-            .NotEmpty()
-            .WithMessage("O registro é obrigatório")
-          .Must(coren => coren >= 0 || coren.ToString().Length == 7) // tava (&&), se não der coloca (||)
-            .WithMessage("O registro deve ter exatamente 7 dígitos.");
+      
+        RuleFor(enfermagem => enfermagem.Coren)
+           .NotEmpty()
+           .WithMessage("O registro é obrigatório")
+            .Length(6)
+           .WithMessage("O registro deve ter exatamente 7 dígitos.");
+           
 
        RuleFor(enfermagem => enfermagem.UnidadeSaude)
             .NotEmpty()
             .WithMessage("A unidade de saúde é obrigatória")
-            .Length(2, 50)
-            .WithMessage("A unidade de saúde deve ter entre 2 e 50 caracteres.");
+            .Length(7, 50)
+            .WithMessage("A unidade de saúde deve ter entre 7 e 50 caracteres.");
 
     }
 

@@ -11,7 +11,7 @@ public class RespostaProfissional
     public string NomeProfissional { get; set; } = string.Empty;
 
     [JsonPropertyName("Registro Do Profissional")]
-    public long RegistroProfissional { get; set; }
+    public string? RegistroProfissional { get; set; }
 
     [JsonPropertyName("Unidade De Saúde")]
     public string UnidadeSaude { get; set; } = string.Empty;

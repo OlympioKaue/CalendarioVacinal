@@ -9,13 +9,13 @@ using VacinasInfantis.Comunicacao.Resposta.Vacinas;
 
 namespace VacinasInfantis.API.Controllers;
 
-[Route("[controller]")]
 [ApiController]
+[Route("api/v1/vacinas")]
 public class VacinasController : ControllerBase
 {
 
     [HttpPost]
-    [Route("RegistrarVacina,{id}")]
+    [Route("registrar/{id:int}")]
     [ProducesResponseType(typeof(RespostaRegistroVacinas), StatusCodes.Status201Created)]
     public async Task<IActionResult> RegistrarVacina([FromServices] IRegistroDeImunizantes useCase, [FromBody] RegistroDeVacinas registrar,
         [FromRoute] int id)
@@ -26,7 +26,7 @@ public class VacinasController : ControllerBase
     }
 
 
-    [HttpGet("ObterTodasVacinas")]
+    [HttpGet("listar")]
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
     public async Task<IActionResult> ObterVacinas([FromServices] IObterVacinasInfantis useCase)
     {
@@ -37,7 +37,7 @@ public class VacinasController : ControllerBase
 
 
     [HttpGet]
-    [Route("ObterVacinasCom{id}")]
+    [Route("listar/{id:int}")]
     [ProducesResponseType(typeof(RespostaCompletaDasVacinas), StatusCodes.Status200OK)]
     public async Task<IActionResult> ObterIdadesVacinas([FromServices] IObterVacinasInfantisIdade useCase, [FromRoute] int id)
     {
@@ -48,18 +48,18 @@ public class VacinasController : ControllerBase
 
 
     [HttpGet]
-    [Route("VacinasAtuais/VacinasTomadas,{id}")]
+    [Route("listar-vacinasAtuais/{id:int}")]
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
-    public async Task<IActionResult> VacinasaAtuais(int id, [FromServices] IObterVacinasAtuais_Proximas useCase)
+    public async Task<IActionResult> VacinasaAtuais([FromRoute] int id, [FromServices] IObterVacinasAtuais_Proximas useCase)
     {
         var result = await useCase.ObterMesAtual(id);
         return Ok(result);
     }
 
     [HttpGet]
-    [Route("VacinaProximoMes,{id}")]
+    [Route("listar-vacinasMesSeguinte/enviarNotificacao/{id:int}")]
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
-    public async Task<IActionResult> VacinasProximoMes(int id, [FromServices] IObterVacinasAtuais_Proximas useCase)
+    public async Task<IActionResult> VacinasProximoMes([FromRoute] int id, [FromServices] IObterVacinasAtuais_Proximas useCase)
     {
       
         var result = await useCase.ObterProximoMes(id);

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using VacinasInfantis.Aplicacao.AutoMapper;
+using VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.AtualizarCriancas;
+using VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.DeletarCriancas;
 using VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.ObterCriancas;
 using VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.RegistrarCrianca;
 using VacinasInfantis.Aplicacao.UseCase.Enfermagem.ObterProfissionalAplicadorID;
@@ -34,6 +36,8 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<IRegistroEnfermagem, RegistroEnfermagem>();
         services.AddScoped<IObterProfissionalAplicador, ObterProfissionalAplicador>();
         services.AddScoped<IObterCriancasRegistradas, ObterCriancasRegistradas>();
+        services.AddScoped<IAtualizacaoDeCriancas, AtualizacaoDeCriancas>();
+        services.AddScoped<IDeletarCriancas, DeletarCriancas>();
     
        
 

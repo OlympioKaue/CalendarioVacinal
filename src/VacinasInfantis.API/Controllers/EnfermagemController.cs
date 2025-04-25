@@ -6,12 +6,12 @@ using VacinasInfantis.Comunicacao.Resposta.Enfermagem;
 
 namespace VacinasInfantis.API.Controllers;
 
-[Route("[controller]")]
 [ApiController]
+[Route("api/v1/enfermagem")]
 public class EnfermagemController : ControllerBase
 {
 
-    [HttpPost("RegistrarProfissionalEnfermagem")]
+    [HttpPost("registrar")]
     [ProducesResponseType(typeof(RespostaRegistroEnfermagem), (StatusCodes.Status201Created))]
     public async Task<IActionResult> RegistrosProfissionais([FromServices] IRegistroEnfermagem useCase, [FromBody] RegistroProfissionaisSaude registro)
     {
@@ -19,7 +19,7 @@ public class EnfermagemController : ControllerBase
         return Created(string.Empty, result);
     } 
 
-    [HttpGet("BuscarProfissionalEnfermagem")]
+    [HttpGet("listar")]
     [ProducesResponseType(typeof(RespostaProfissional), (StatusCodes.Status200OK))]
     public async Task<IActionResult> ObterProfissionaisDeEnfermagem([FromServices] IObterProfissionalAplicador useCase)
     {
@@ -27,9 +27,9 @@ public class EnfermagemController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("BuscarProfissionalEnfermagemAplicador,{id}")]
+    [HttpGet("listar/{id:int}")]
     [ProducesResponseType(typeof(RespostaProfissionalAplicadorDTO), (StatusCodes.Status200OK))]
-    public async Task<IActionResult> ObterProfissionaisAplicador(int id, [FromServices] IObterProfissionalAplicador useCase)
+    public async Task<IActionResult> ObterProfissionaisAplicador([FromRoute]int id, [FromServices] IObterProfissionalAplicador useCase)
     {
         var result = await useCase.ObterProfissionaisDeImunizacao(id);
         return Ok(result);

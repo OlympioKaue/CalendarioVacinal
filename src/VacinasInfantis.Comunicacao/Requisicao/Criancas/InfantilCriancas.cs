@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace VacinasInfantis.Comunicacao.Requisicao.Criancas;
 
-public class RegistrarCriancas
+public class InfantilCriancas
 {
     [JsonPropertyName("Nome da Criança")]
     public string NomeDaCrianca { get; set; } = string.Empty;
@@ -18,7 +18,7 @@ public class RegistrarCriancas
     public DateTime DataDeNascimentoDaCrianca { get; set; }
 
     [Required]
-    public string EmailResponsavel { get; set; } = string.Empty;
+    public string? EmailResponsavel { get; set; }
 
 
 }

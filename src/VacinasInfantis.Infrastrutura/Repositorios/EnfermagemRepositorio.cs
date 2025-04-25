@@ -17,6 +17,20 @@ internal class EnfermagemRepositorio : IAdicionarProfissionaisSaude, IProfission
 
     public async Task AddEnfermagem(Profissionais profissionais)
     {
+        bool profissionalExistente = await _dbcontext.Profissionais
+            .AnyAsync(p => p.RegistroProfissional == profissionais.RegistroProfissional);
+        if (profissionalExistente == true)
+        {
+            throw new Excecoes("Profissional Ja Cadastrado");
+        }
+
+
+
+
+
+
+
+
         await _dbcontext.Profissionais.AddAsync(profissionais);
     }
 
@@ -54,6 +68,7 @@ internal class EnfermagemRepositorio : IAdicionarProfissionaisSaude, IProfission
     {
 
         var profissionais = await _dbcontext.Profissionais.AsNoTracking().ToListAsync();
+        
 
         return profissionais.Select(p => new RespostaProfissional
         {
@@ -63,6 +78,7 @@ internal class EnfermagemRepositorio : IAdicionarProfissionaisSaude, IProfission
             UnidadeSaude = p.UnidadeSaude,
 
         }).ToList();
+        
 
 
     }

@@ -5,6 +5,7 @@ using VacinasInfantis.Comunicacao.Resposta.Criancas;
 using VacinasInfantis.Domain.Entidades;
 using VacinasInfantis.Domain.Repositorios.Interfaces;
 using VacinasInfantis.Excecao.BaseDaExcecao;
+using InfantilCriancas = VacinasInfantis.Comunicacao.Requisicao.Criancas.InfantilCriancas;
 
 namespace VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.RegistrarCrianca;
 
@@ -20,7 +21,7 @@ public class RegistrosDeCriancas : IRegistrosDeCriancas
         _salvadorDeDados = salvadorDeDados;
     }
 
-    public async Task<CriancasSalvas> Execute(RegistrarCriancas registrar)
+    public async Task<CriancasSalvas> Execute(InfantilCriancas registrar)
     {
         // Primeiro valide os objetos de entrada
 
@@ -31,7 +32,7 @@ public class RegistrosDeCriancas : IRegistrosDeCriancas
 
         ValidarCrianca(registrar);
 
-        var entity = _mapeamento.Map<Criancas>(registrar);
+        var entity = _mapeamento.Map<Domain.Entidades.Criancas>(registrar);
 
         await _adicionar.AddCriancas(entity);
 
@@ -40,7 +41,7 @@ public class RegistrosDeCriancas : IRegistrosDeCriancas
         return _mapeamento.Map<CriancasSalvas>(entity);
     }
 
-    private void ValidarCrianca(RegistrarCriancas registrar)
+    private void ValidarCrianca(Comunicacao.Requisicao.Criancas.InfantilCriancas registrar)
     {
         var validacao = new ValidarRegistrosDeCriancas();
         var resultado = validacao.Validate(registrar);

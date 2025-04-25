@@ -8,7 +8,7 @@ public class RegistroProfissionaisSaude
     public string? Nome { get; set; }
 
     [JsonPropertyName("Registro Profissional")]
-    public long Coren { get; set; }
+    public string? Coren { get; set; } 
 
     [JsonPropertyName("Unidade De Saude")]
     public string? UnidadeSaude { get; set; }

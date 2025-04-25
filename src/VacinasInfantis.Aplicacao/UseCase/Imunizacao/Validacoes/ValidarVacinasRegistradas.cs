@@ -18,24 +18,19 @@ public class ValidarVacinasRegistradas : AbstractValidator<RegistroDeVacinas>
             .WithMessage("O nome da vacina deve ter entre 2 a 50 caractere");
 
         RuleFor(vacina => vacina.DataDeAplicacao)
-           
-            .Must(vacina => vacina >= 0 || vacina.ToString().Length == 2 || vacina.ToString().Length == 1)
-            .WithMessage("O mês de aplicação deve entre igual ou maior que 0 meses, os digitos deve ter entre 1 a 2 caracteres");
+            .NotEmpty()
+            .WithMessage("O mês de aplicação é obrigatório")
+            .GreaterThanOrEqualTo(0)
+            .WithMessage("O mês de aplicação deve ser maior ou igual a 0 meses")
+            .LessThanOrEqualTo(48)
+            .WithMessage("O mês de aplicação deve ser entre 0 a 48 meses");
+
 
         RuleFor(vacina => vacina.DataAplicacao)
             .NotEmpty()
             .WithMessage("A data de aplicação é obrigatória")
             .LessThanOrEqualTo(DateTime.UtcNow)
             .WithMessage("A data de aplicação não pode ser maior que a data atual");
-
-       // RuleFor(vacina => vacina.ProfissionalSaudeId)
-         //   .NotEmpty()
-          //  .WithMessage("O profissional de saúde é obrigatório")
-          //  .GreaterThan(0)
-           // .WithMessage("O Id do profissional de saúde deve ser maior que 0");
-
-
-
 
 
     }

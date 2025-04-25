@@ -13,6 +13,8 @@
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Quartz" Version="3.14.0" />
+    <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.14.0" />
+    <PackageReference Include="Quartz.Jobs" Version="3.14.0" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
   </ItemGroup>
@@ -22,15 +24,12 @@
     <ProjectReference Include="..\..\src\VacinasInfantis.Comunicacao\VacinasInfantis.Comunicacao.csproj" />
     <ProjectReference Include="..\..\src\VacinasInfantis.Excecao\VacinasInfantis.Excecao.csproj" />
     <ProjectReference Include="..\RequisicoesCriancas\RequisicoesCriancas\RequisicoesCriancas.csproj" />
+    <ProjectReference Include="..\RequisicoesProfissionais\RequisicoesProfissionais\RequisicoesProfissionais.csproj" />
+    <ProjectReference Include="..\RequisicoesVacinas\RequisicoesVacinas\RequisicoesVacinas.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Xunit" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Profissionais\" />
-    <Folder Include="Vacinas\" />
   </ItemGroup>
 
 </Project>
