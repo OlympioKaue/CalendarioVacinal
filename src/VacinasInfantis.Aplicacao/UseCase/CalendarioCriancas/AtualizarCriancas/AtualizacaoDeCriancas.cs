@@ -10,11 +10,11 @@ namespace VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.AtualizarCriancas
 
 public class AtualizacaoDeCriancas : IAtualizacaoDeCriancas
 {
-    private readonly IVacinasInfantis _criancas;
+    private readonly ICriancasRepositorio _criancas;
     private readonly IMapper _mapeamento;
     private readonly ISalvadorDeDados _salvar;
 
-    public AtualizacaoDeCriancas(IVacinasInfantis criancas, IMapper mapeamento, ISalvadorDeDados salvar)
+    public AtualizacaoDeCriancas(ICriancasRepositorio criancas, IMapper mapeamento, ISalvadorDeDados salvar)
     {
         _criancas = criancas;
         _mapeamento = mapeamento;

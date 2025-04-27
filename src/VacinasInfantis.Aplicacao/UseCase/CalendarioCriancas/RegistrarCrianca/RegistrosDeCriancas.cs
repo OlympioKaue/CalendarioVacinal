@@ -11,10 +11,10 @@ namespace VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.RegistrarCrianca;
 
 public class RegistrosDeCriancas : IRegistrosDeCriancas
 {
-    private readonly IVacinasInfantis _adicionar;
+    private readonly ICriancasRepositorio _adicionar;
     private readonly IMapper _mapeamento;
     private readonly ISalvadorDeDados _salvadorDeDados;
-    public RegistrosDeCriancas(IVacinasInfantis adicionar, ISalvadorDeDados salvadorDeDados, IMapper mapeamento)
+    public RegistrosDeCriancas(ICriancasRepositorio adicionar, ISalvadorDeDados salvadorDeDados, IMapper mapeamento)
     {
         _adicionar = adicionar;
         _mapeamento = mapeamento;
@@ -32,7 +32,7 @@ public class RegistrosDeCriancas : IRegistrosDeCriancas
 
         ValidarCrianca(registrar);
 
-        var entity = _mapeamento.Map<Domain.Entidades.Criancas>(registrar);
+        var entity = _mapeamento.Map<Criancas>(registrar);
 
         await _adicionar.AddCriancas(entity);
 
@@ -41,7 +41,7 @@ public class RegistrosDeCriancas : IRegistrosDeCriancas
         return _mapeamento.Map<CriancasSalvas>(entity);
     }
 
-    private void ValidarCrianca(Comunicacao.Requisicao.Criancas.InfantilCriancas registrar)
+    private void ValidarCrianca(InfantilCriancas registrar)
     {
         var validacao = new ValidarRegistrosDeCriancas();
         var resultado = validacao.Validate(registrar);

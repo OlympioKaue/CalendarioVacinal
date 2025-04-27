@@ -7,11 +7,11 @@ namespace VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.DeletarCriancas;
 
 public class DeletarCriancas : IDeletarCriancas
 {
-    private readonly IVacinasInfantis _criancas;
+    private readonly ICriancasRepositorio _criancas;
     private readonly IMapper _mapeamento;
     private readonly ISalvadorDeDados _salvar;
 
-    public DeletarCriancas(IVacinasInfantis criancas, IMapper mapeamento, ISalvadorDeDados salvar)
+    public DeletarCriancas(ICriancasRepositorio criancas, IMapper mapeamento, ISalvadorDeDados salvar)
     {
         _criancas = criancas;
         _mapeamento = mapeamento;
@@ -23,7 +23,7 @@ public class DeletarCriancas : IDeletarCriancas
         var resultado = await _criancas.BuscarCriancaPorId(id);
         if (resultado is null)
         {
-            throw new Excecoes("Crianca não encontrada");
+            throw new NaoEncontrado("Crianca não encontrada");
         }
 
         _criancas.DeletarCrianca(resultado);

@@ -72,7 +72,7 @@ public class RegistroDeImunizantes : IRegistroDeImunizantes
     {
         var validacoes = new ValidarVacinasRegistradas();
         var resultado = validacoes.Validate(registroDeVacinas);
-        var profissional = await _adicionar.BuscarPorId(registroDeVacinas.ProfissionalSaudeId);
+        var profissional = await _adicionar.BuscarProfissionalDeVacinas(registroDeVacinas.ProfissionalSaudeId);
         
         if (profissional is null)
         {

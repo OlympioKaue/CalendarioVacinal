@@ -43,7 +43,7 @@ public class ObterProfissionalAplicador : IObterProfissionalAplicador
         var aplicadores = await _servico.ObterProfissionaisAplicadores();
         if (!aplicadores.Any(x => x.Id == id))
         {
-            throw new NaoEncontrado("Profissional não encontrado, digite correto o ID do Profissional de Saúde !");
+            throw new NaoEncontrado("Este profissional não realizou aplicações de vacinas");
         }
             
 

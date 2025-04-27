@@ -7,11 +7,11 @@ namespace VacinasInfantis.Aplicacao.UseCase.CalendarioCriancas.ObterCriancas;
 
 public class ObterCriancasRegistradas : IObterCriancasRegistradas
 {
-    private readonly IVacinasInfantis _criancas;
+    private readonly ICriancasRepositorio _criancas;
     private readonly IMapper _mapeamento;
 
 
-    public ObterCriancasRegistradas(IVacinasInfantis criancas, IMapper mapeamento)
+    public ObterCriancasRegistradas(ICriancasRepositorio criancas, IMapper mapeamento)
     {
         _mapeamento = mapeamento;
 

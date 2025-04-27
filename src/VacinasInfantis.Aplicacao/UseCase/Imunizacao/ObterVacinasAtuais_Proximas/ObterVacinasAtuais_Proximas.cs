@@ -9,16 +9,16 @@ namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasAtuais_Proxim
 
 public class ObterVacinasAtuais_Proximas : IObterVacinasAtuais_Proximas
 {
-    private readonly ILeituraVacinasRepositorio _leituraVacinas;
+    private readonly IVacinasInfantis _vacinas;
     private readonly IMapper _mapeamento;
     private readonly IServicoDeEmailRepositorio _email;
 
 
 
 
-    public ObterVacinasAtuais_Proximas(ILeituraVacinasRepositorio leituraVacinas, IMapper mapeamento, IServicoDeEmailRepositorio email)
+    public ObterVacinasAtuais_Proximas(IVacinasInfantis vacinas, IMapper mapeamento, IServicoDeEmailRepositorio email)
     {
-        _leituraVacinas = leituraVacinas;
+        _vacinas = vacinas;
         _mapeamento = mapeamento;
         _email = email;
         
@@ -31,7 +31,7 @@ public class ObterVacinasAtuais_Proximas : IObterVacinasAtuais_Proximas
         // Retorne as vacinas do mês atual
 
 
-        var result = await _leituraVacinas.ObterVacinasAtual(id);
+        var result = await _vacinas.ObterVacinasAtual(id);
         if (result is null || result.Count == 0)
         {
             throw new NaoEncontrado("Nenhuma vacina encontrada para essa criança");
@@ -51,7 +51,7 @@ public class ObterVacinasAtuais_Proximas : IObterVacinasAtuais_Proximas
         // Obtem as vacinas do próximo mês
         // Retorne as vacinas do próximo mês
 
-        var result = await _leituraVacinas.ObterVacinasProximoMes(id);
+        var result = await _vacinas.ObterVacinasProximoMes(id);
         if (result is null || result.Count == 0)
         {
             throw new NaoEncontrado("Nenhuma vacina encontrada para essa criança");

@@ -26,13 +26,9 @@ internal class EnfermagemRepositorio : IAdicionarProfissionaisSaude, IProfission
 
 
 
-
-
-
-
-
         await _dbcontext.Profissionais.AddAsync(profissionais);
     }
+
 
     public async Task<List<RespostaProfissionaisEnfermagemDTO>> ObterProfissionaisAplicadores()
     {
@@ -81,6 +77,23 @@ internal class EnfermagemRepositorio : IAdicionarProfissionaisSaude, IProfission
         
 
 
+    }
+
+    public async Task<Profissionais?> ObterProfissionalPorId(int id)
+    {
+        return await _dbcontext.Profissionais
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.Id == id);
+    }
+
+    public void AtualizarProfissionais(Profissionais profissionais)
+    {
+        _dbcontext.Profissionais.Update(profissionais);
+    }
+
+    public void DeletarProfissionais(Profissionais profissionais)
+    {
+        _dbcontext.Profissionais.Remove(profissionais);
     }
 }
 

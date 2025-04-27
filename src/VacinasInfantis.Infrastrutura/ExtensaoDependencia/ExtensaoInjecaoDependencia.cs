@@ -26,7 +26,7 @@ public static class ExtensaoInjecaoDependencia
 
     private static void AdicionarInjecaoDependencia(this IServiceCollection services)
     {
-        services.AddScoped<ILeituraVacinasRepositorio, VacinasRepositorio>();
+        services.AddScoped<ICriancasRepositorio, TesteDeCriancas>();
         services.AddScoped<IVacinasInfantis, VacinasRepositorio>();
         services.AddScoped<ISalvadorDeDados, SalvarRepositorio>();
         services.AddScoped<IAdicionarProfissionaisSaude, EnfermagemRepositorio>();

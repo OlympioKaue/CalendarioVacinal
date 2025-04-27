@@ -8,7 +8,7 @@ using VacinasInfantis.Infrastrutura.DataBaseAcesso;
 
 namespace VacinasInfantis.Infrastrutura.Repositorios;
 
-internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
+internal class VacinasRepositorio : IVacinasInfantis
 {
     private readonly VacinaInfantilDbContext _dbContext;
 
@@ -19,18 +19,25 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
 
 
 
-    public async Task AddVacinas(Vacinas vacinas)
+    public async Task AddVacinas(Vacinas vacinas) // ok
     {
 
-        var criancaExiste = await _dbContext.Criancas.AnyAsync(crianca => crianca.Id == vacinas.CriancasId);
+        bool criancaExiste = await _dbContext.Criancas.AnyAsync(crianca => crianca.Id == vacinas.CriancasId);
 
         if (criancaExiste is false)
         {
             throw new NaoEncontrado("A criança não foi encontrada");
         }
 
+        bool vacinaExiste = await _dbContext.Vacinas
+        .AnyAsync(v => v.NomeDaVacina == vacinas.NomeDaVacina);
+        if (vacinaExiste is true)
+        {
+            throw new Excecoes("A vacina já foi aplicada");
+        }
 
-        var vacinaCrianca = new Vacinas
+
+            var vacinaCrianca = new Vacinas
         {
             CriancasId = vacinas.CriancasId,
             NomeDaVacina = vacinas.NomeDaVacina,
@@ -42,20 +49,14 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
         await _dbContext.Vacinas.AddAsync(vacinaCrianca);
     }
 
-    public async Task<List<Vacinas>> ObterVacinasIdade(int id)
-    {
-        return await _dbContext.Vacinas
-              .Where(v => v.CriancasId == id)
-              .ToListAsync();
-    }
 
-    public async Task<List<CalendarioDeVacinas>> ObterTodasVacinas()
+    public async Task<List<CalendarioDeVacinas>> ObterTodasVacinas() // ok
     {
         return await _dbContext.CalendarioDeVacinas.AsNoTracking().ToListAsync();
     }
 
 
-    public async Task<List<Vacinas>> ObterVacinasAtual(int id)
+    public async Task<List<Vacinas>> ObterVacinasAtual(int id) // ok
     {
 
         var hoje = DateTime.Today;
@@ -68,7 +69,7 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
         var criancas = await _dbContext.Criancas.Where(v => v.Id == id)
             .AsNoTracking()
             .FirstOrDefaultAsync(v => v.Id == id);
-        if(criancas is null)
+        if (criancas is null)
         {
             return new List<Vacinas>();
         }
@@ -84,7 +85,7 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
             var vacinaMesAtual = _dbContext.Vacinas.Include(v => v.ProfissionalSaude).Where(v => v.MesAplicacao == idadeMeses).ToList();
 
 
-           return vacinaMesAtual;
+            return vacinaMesAtual;
         }
 
 
@@ -92,7 +93,7 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
 
     }
 
-    public async Task<List<CalendarioDeVacinas>> ObterVacinasProximoMes(int id)
+    public async Task<List<CalendarioDeVacinas>> ObterVacinasProximoMes(int id) // ok
     {
 
         var hoje = DateTime.Today;
@@ -139,20 +140,66 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
 
     }
 
-    public async Task<Profissionais?> BuscarPorId(int id)
+    public async Task<Vacinas?> BuscarVacinaDaCrianca(int id, int idVacina) // ok
+    {
+        var crianca = await _dbContext.Criancas.Where(v => v.Id == id).FirstOrDefaultAsync();
+        if(crianca == null)
+        {
+            throw new NaoEncontrado("Criança não encontrada");
+        }
+
+        return await _dbContext.Vacinas.Where(v => v.Id == idVacina).AsNoTracking().FirstOrDefaultAsync();
+            
+    }
+
+    public void AtualizarVacinas(Vacinas vacinas) // ok
+    {
+        _dbContext.Vacinas.Update(vacinas);
+    }
+
+
+    public void DeletarVacinas(Vacinas vacinas) // ok
+    {
+        _dbContext.Vacinas.Remove(vacinas);
+    }
+
+    public async Task<List<Vacinas>> ObterVacinasIdade(int id) // ok
+    {
+        return await _dbContext.Vacinas
+              .Where(v => v.CriancasId == id)
+              .ToListAsync();
+    }
+
+    // =============================================================================================================//
+
+    // ESSA FUNÇÃO PRECISA SAIR DAQUI, LEMBRE-SE, PRECISA ESTAR DENTRO DE PROFISSIONAIS //
+
+    public async Task<Profissionais?> BuscarProfissionalDeVacinas(int id)
     {
         return await _dbContext.Profissionais.Include(v => v.Vacinas).FirstOrDefaultAsync(v => v.Id == id);
     }
 
+    // =============================================================================================================//
+
+
+    /*
     public async Task AddCriancas(Criancas criancas)
     {
+        bool criancaExistente = await _dbContext.Criancas
+            .AnyAsync(c => c.NomeDaCrianca == criancas.NomeDaCrianca && c.DataDeNascimentoDaCrianca == criancas.DataDeNascimentoDaCrianca &&
+            c.NomeDaMae == criancas.NomeDaMae);
+        if (criancaExistente is true)
+            throw new Excecoes("Criança já cadastrada");
+
+
+
         await _dbContext.Criancas.AddAsync(criancas);
 
     }
 
-    public void AtualizarCriancas(Criancas criancas)    
-    { 
-     
+    public void AtualizarCriancas(Criancas criancas)
+    {
+
         _dbContext.Criancas.Update(criancas);
     }
 
@@ -171,6 +218,8 @@ internal class VacinasRepositorio : ILeituraVacinasRepositorio, IVacinasInfantis
     {
         _dbContext.Criancas.Remove(criancas);
     }
+
+  */
 }
 
 

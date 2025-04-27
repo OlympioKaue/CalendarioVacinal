@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignora configurações de desenvolvimento
+src/VacinasInfantis.API/appsettings.Development.json
+
+# Ignora todos os appsettings de desenvolvimento
+**/appsettings.Development.json

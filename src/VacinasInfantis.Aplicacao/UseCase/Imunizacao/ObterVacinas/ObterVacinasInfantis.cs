@@ -9,10 +9,10 @@ namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinas;
 
 public class GetVacinasInfantisUseCase : IObterVacinasInfantis
 {
-    private readonly ILeituraVacinasRepositorio _leitura;
+    private readonly IVacinasInfantis _leitura;
     private readonly IMapper _mapeamento;
 
-    public GetVacinasInfantisUseCase(ILeituraVacinasRepositorio leitura, IMapper mapeamento)
+    public GetVacinasInfantisUseCase(IVacinasInfantis leitura, IMapper mapeamento)
     {
         _leitura = leitura;
         _mapeamento = mapeamento;

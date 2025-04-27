@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VacinasInfantis.Aplicacao.UseCase.Imunizacao.AtualizarVacinas;
+using VacinasInfantis.Aplicacao.UseCase.Imunizacao.DeletarVacinas;
 using VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinas;
 using VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasAtuais_Proximas;
 using VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasId;
@@ -67,5 +69,24 @@ public class VacinasController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPut]
+    [Route("atualizar-vacinas/{idCrianca:int}/{idVacina:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> AtualizarVacinas([FromRoute] int idCrianca, [FromRoute] int idVacina, [FromBody] RegistroDeVacinas registrar, [FromServices] IAtualizarImunizantes useCase)
+    {
+
+        await useCase.AtualizarVacinas(idCrianca, idVacina, registrar);
+        return NoContent();
+    }
+
+    [HttpDelete]
+    [Route("deletar-vacinas/{idCrianca:int}/{idVacina:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> AtualizarVacinas([FromRoute] int idCrianca, [FromRoute] int idVacina, [FromServices] IDeletarImunizantes useCase)
+    {
+
+        await useCase.DeletarVacinas(idCrianca, idVacina);
+        return NoContent();
+    }
 
 }

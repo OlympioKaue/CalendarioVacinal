@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VacinasInfantis.Aplicacao.UseCase.Enfermagem.AtualizarProfissionais;
+using VacinasInfantis.Aplicacao.UseCase.Enfermagem.DeletarProfissionais;
 using VacinasInfantis.Aplicacao.UseCase.Enfermagem.ObterProfissionalAplicadorID;
 using VacinasInfantis.Aplicacao.UseCase.Enfermagem.Registro;
 using VacinasInfantis.Comunicacao.Requisicao.Enfermagem;
@@ -27,12 +29,29 @@ public class EnfermagemController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("listar/{id:int}")]
+    [HttpGet("listar-profissional-aplicador/{id:int}")]
     [ProducesResponseType(typeof(RespostaProfissionalAplicadorDTO), (StatusCodes.Status200OK))]
     public async Task<IActionResult> ObterProfissionaisAplicador([FromRoute]int id, [FromServices] IObterProfissionalAplicador useCase)
     {
-        var result = await useCase.ObterProfissionaisDeImunizacao(id);
-        return Ok(result);
+        var resultado = await useCase.ObterProfissionaisDeImunizacao(id);
+        return Ok(resultado);
+    }
+
+
+    [HttpPut("atualizar/{id:int}")]
+    public async Task<IActionResult> AtualizarProfissionaisDeEnfermagem([FromRoute] int id, [FromBody] RegistroProfissionaisSaude registro, 
+        [FromServices] IAtualizacaoDeProfissionaisEnfermagem useCase )
+    {
+        await useCase.ProfissionaisDeEnfermagem(registro, id);
+        return NoContent();
+    }
+
+    [HttpDelete("deletar/{id:int}")]
+    public async Task<IActionResult> DeletarProfissionaisDeEnfermagem([FromRoute] int id,
+      [FromServices] IDeletarProfissionaisEnfermagem useCase)
+    {
+        await useCase.DeletarProfissionais(id);
+        return NoContent();
     }
 
 }

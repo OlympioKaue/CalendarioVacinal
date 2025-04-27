@@ -7,12 +7,12 @@ namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasId;
 
 public class ObterVacinasInfantisIdade : IObterVacinasInfantisIdade
 {
-    private readonly ILeituraVacinasRepositorio _leitura;
+    private readonly IVacinasInfantis _vacinas;
     private readonly IMapper _mapeamento;
 
-    public ObterVacinasInfantisIdade(ILeituraVacinasRepositorio leitura, IMapper mapeamento)
+    public ObterVacinasInfantisIdade(IVacinasInfantis vacinas, IMapper mapeamento)
     {
-        _leitura = leitura;
+        _vacinas = vacinas;
         _mapeamento = mapeamento;
     }
 
@@ -22,7 +22,7 @@ public class ObterVacinasInfantisIdade : IObterVacinasInfantisIdade
         // Idade valida de 0 a 48 meses, equivalente 0 meses a 4 anos.
         // Retorna as vacinas conforme a idade da criança.
 
-        var result = await _leitura.ObterVacinasIdade(id);
+        var result = await _vacinas.ObterVacinasIdade(id);
         if(result.Count == 0)
         {
             throw new NaoEncontrado("Vacina não encontrada, digite novamente o ID da Criança");
