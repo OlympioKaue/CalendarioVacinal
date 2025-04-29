@@ -34,7 +34,7 @@ public class FiltroDeExcecao : IExceptionFilter
 
     private void ExcecoesDesconhecidas(ExceptionContext context)
     {
-        var RespostaDeErro = new RespostaDeErro("Erro Descconheccido - 500");
+        var RespostaDeErro = new RespostaDeErro("Erro Descconhecido - 500");
 
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Result = new ObjectResult(RespostaDeErro);

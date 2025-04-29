@@ -2,5 +2,5 @@
 
 public interface ISalvadorDeDados
 {
-    Task Commit();
+    Task Commit(); // ok
 }

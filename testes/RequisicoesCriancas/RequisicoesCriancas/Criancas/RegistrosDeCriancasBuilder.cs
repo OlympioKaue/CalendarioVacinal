@@ -5,10 +5,10 @@ namespace RequisicoesCriancas.Criancas;
 
 public class RegistrosDeCriancasBuilder
 {
-    public static VacinasInfantis.Comunicacao.Requisicao.Criancas.InfantilCriancas Builder()
+    public static InfantilCriancas Builder()
     {
         var faker = new Faker();
-        return new Faker<Criancas>()
+        return new Faker<InfantilCriancas>()
             .RuleFor(x => x.NomeDaCrianca, faker => faker.Name.FullName())
             .RuleFor(x => x.NomeDaMae, faker => faker.Name.FullName())
             .RuleFor(x => x.NomeDoPai, faker => faker.Name.FullName())

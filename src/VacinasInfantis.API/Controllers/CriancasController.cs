@@ -28,18 +28,18 @@ public class CriancasController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut("atualizar/{id:int}")]
-    public async Task<IActionResult> AtualizarCrianca([FromRoute] int id, [FromServices] IAtualizacaoDeCriancas useCase, [FromBody] InfantilCriancas registrar)
+    [HttpPut("atualizar/{idCrianca:int}")]
+    public async Task<IActionResult> AtualizarCrianca([FromRoute] int idCrianca, [FromServices] IAtualizacaoDeCriancas useCase, [FromBody] InfantilCriancas registrar)
     {
-        await useCase.Atualizar(registrar, id);
+        await useCase.Atualizar(registrar, idCrianca);
         return NoContent();
     }
 
 
-    [HttpDelete("deletar/{id:int}")]
-    public async Task<IActionResult> DeletarCrianca([FromRoute] int id, [FromServices] IDeletarCriancas useCase)
+    [HttpDelete("deletar/{idCrianca:int}")]
+    public async Task<IActionResult> DeletarCrianca([FromRoute] int idCrianca, [FromServices] IDeletarCriancas useCase)
     {
-        await useCase.Deletar(id);
+        await useCase.Deletar(idCrianca);
         return NoContent();
     }
 

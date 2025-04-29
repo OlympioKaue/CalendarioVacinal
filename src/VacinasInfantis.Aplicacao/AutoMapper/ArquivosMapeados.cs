@@ -54,8 +54,6 @@ public class ArquivosMapeados : Profile
 
         CreateMap<Profissionais, RespostaRegistroEnfermagem>();
 
-    
-
         CreateMap<Profissionais, RespostaProfissionaisEnfermagemDTO>()
        .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
        .ForMember(dest => dest.NomeProfissional, opt => opt.MapFrom(src => src.NomeProfissional))

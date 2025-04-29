@@ -23,12 +23,11 @@ public class RegistrosDeCriancas : IRegistrosDeCriancas
 
     public async Task<CriancasSalvas> Execute(InfantilCriancas registrar)
     {
-        // Primeiro valide os objetos de entrada
-
-        // mapear o objeto de entrada para a entidade
-        // adicione criancas ao banco de dados
-        // e salve as alterações
-        // retorne o objeto mapeado de resposta
+        // Primeiro valide os objetos de entrada.
+        // mapear o objeto de entrada para a entidade.
+        // adicione criancas ao banco de dados.
+        // e salve as alterações.
+        // retorne o objeto mapeado de resposta.
 
         ValidarCrianca(registrar);
 

@@ -163,7 +163,7 @@ internal class VacinasRepositorio : IVacinasInfantis
         _dbContext.Vacinas.Remove(vacinas);
     }
 
-    public async Task<List<Vacinas>> ObterVacinasIdade(int id) // ok
+    public async Task<List<Vacinas>> ObterVacinasPorId(int id) // ok
     {
         return await _dbContext.Vacinas
               .Where(v => v.CriancasId == id)

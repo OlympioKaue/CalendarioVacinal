@@ -5,10 +5,10 @@ namespace VacinasInfantis.Domain.Repositorios.Interfaces;
 
 public interface IProfissionalSaudeServico
 {
-    Task<List<RespostaProfissionaisEnfermagemDTO>> ObterProfissionaisAplicadores();
-    Task<List<RespostaProfissional>> ObterProfissionaisDeEnfermagem();
-    Task<Profissionais?> ObterProfissionalPorId(int id);
-    public void AtualizarProfissionais(Profissionais profissionais);
-    public void DeletarProfissionais(Profissionais profissionais);
+    Task<List<RespostaProfissionaisEnfermagemDTO>> ObterProfissionaisAplicadores(); // ok
+    Task<List<RespostaProfissional>> ObterProfissionaisDeEnfermagem(); // ok
+    Task<Profissionais?> ObterProfissionalPorId(int id); // ok
+    public void AtualizarProfissionais(Profissionais profissionais); // ok
+    public void DeletarProfissionais(Profissionais profissionais); // ok
 
 }

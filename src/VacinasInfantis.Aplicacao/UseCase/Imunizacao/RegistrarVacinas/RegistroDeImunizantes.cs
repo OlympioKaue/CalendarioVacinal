@@ -28,12 +28,12 @@ public class RegistroDeImunizantes : IRegistroDeImunizantes
 
     public async Task<RespostaRegistroVacinas> Executar(int criancasId, RegistroDeVacinas registroDeVacinas)
     {
-        // Mapeia o objeto de entrada para a entidade
-        // passe o ID da criança para o mapeamento
-        // Adicione a vacina ao banco de dados
-        // e salve as alterações
-        // Verifica se a criança existe, se não existir a crianca e profissional retorne um erro
-        // Retorna a vacina salva
+        // Mapeia o objeto de entrada para a entidade.
+        // passe o ID da criança para o mapeamento.
+        // Adicione a vacina ao banco de dados.
+        // e salve as alterações.
+        // Verifica se a criança existe, se não existir a crianca e profissional retorne um erro.
+        // Retorna a vacina salva.
 
 
 
@@ -55,8 +55,6 @@ public class RegistroDeImunizantes : IRegistroDeImunizantes
 
     private void Validate(ValidationResult registroDeVacinas)
     {
-
-
 
         if (registroDeVacinas.IsValid is false)
         {

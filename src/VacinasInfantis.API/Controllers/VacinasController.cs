@@ -17,13 +17,13 @@ public class VacinasController : ControllerBase
 {
 
     [HttpPost]
-    [Route("registrar/{id:int}")]
+    [Route("registrar/{idCrianca:int}")]
     [ProducesResponseType(typeof(RespostaRegistroVacinas), StatusCodes.Status201Created)]
     public async Task<IActionResult> RegistrarVacina([FromServices] IRegistroDeImunizantes useCase, [FromBody] RegistroDeVacinas registrar,
-        [FromRoute] int id)
+        [FromRoute] int idCrianca)
     {
 
-        var result = await useCase.Executar(id, registrar);
+        var result = await useCase.Executar(idCrianca, registrar);
         return Created(string.Empty, result);
     }
 
@@ -39,32 +39,32 @@ public class VacinasController : ControllerBase
 
 
     [HttpGet]
-    [Route("listar/{id:int}")]
+    [Route("listar/{idCrianca:int}")]
     [ProducesResponseType(typeof(RespostaCompletaDasVacinas), StatusCodes.Status200OK)]
-    public async Task<IActionResult> ObterIdadesVacinas([FromServices] IObterVacinasInfantisIdade useCase, [FromRoute] int id)
+    public async Task<IActionResult> ObterIdadesVacinas([FromServices] IObterVacinasPorIdDaCrianca useCase, [FromRoute] int idCrianca)
     {
-        var result = await useCase.ObterVacinaPorID(id);
+        var result = await useCase.ObterVacinaPorID(idCrianca);
 
         return Ok(result);
     }
 
 
     [HttpGet]
-    [Route("listar-vacinasAtuais/{id:int}")]
+    [Route("listar-vacinasAtuais/{idCrianca:int}")]
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
-    public async Task<IActionResult> VacinasaAtuais([FromRoute] int id, [FromServices] IObterVacinasAtuais_Proximas useCase)
+    public async Task<IActionResult> VacinasaAtuais([FromRoute] int idCrianca, [FromServices] IObterVacinasAtuais_Proximas useCase)
     {
-        var result = await useCase.ObterMesAtual(id);
+        var result = await useCase.ObterMesAtual(idCrianca);
         return Ok(result);
     }
 
     [HttpGet]
-    [Route("listar-vacinasMesSeguinte/enviarNotificacao/{id:int}")]
+    [Route("listar-vacinasMesSeguinte/enviarNotificacao/{idCrianca:int}")]
     [ProducesResponseType(typeof(RespostaSimplificada), StatusCodes.Status200OK)]
-    public async Task<IActionResult> VacinasProximoMes([FromRoute] int id, [FromServices] IObterVacinasAtuais_Proximas useCase)
+    public async Task<IActionResult> VacinasProximoMes([FromRoute] int idCrianca, [FromServices] IObterVacinasAtuais_Proximas useCase)
     {
       
-        var result = await useCase.ObterProximoMes(id);
+        var result = await useCase.ObterProximoMes(idCrianca);
 
         return Ok(result);
     }

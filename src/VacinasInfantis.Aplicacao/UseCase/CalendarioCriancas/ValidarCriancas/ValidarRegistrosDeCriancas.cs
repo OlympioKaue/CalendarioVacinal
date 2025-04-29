@@ -22,11 +22,7 @@ public class ValidarRegistrosDeCriancas : AbstractValidator<InfantilCriancas>
             .Length(7, 50)
             .WithMessage("O nome da mãe deve ter entre 7 e 50 caracteres.");
 
-
-
         // O nome do pai é opcional (devido a ausência no registro civil)
-
-
 
         RuleFor(data_nascimento => data_nascimento.DataDeNascimentoDaCrianca)
             .NotEmpty()
@@ -45,19 +41,14 @@ public class ValidarRegistrosDeCriancas : AbstractValidator<InfantilCriancas>
             .Must(EmailValido)
             .WithMessage("O email do responsável deve ser válido com dominio permitido");
 
-
-
-
-
-
     }
 
-    private bool EmailValido(string email)
+    private bool EmailValido(string? email)
     {
         if (string.IsNullOrEmpty(email))
             return false;
 
-        string padrao = @"^[\w\.\-]+@(?:outlook\.com|gmail\.com|hotmail\.com)$";
+        string padrao = @"^[\w\.\-]+@(?:outlook\.com|gmail\.com|hotmail\.com|yahoo\.com)$";
        return Regex.IsMatch(email, padrao, RegexOptions.IgnoreCase);
     }
 }

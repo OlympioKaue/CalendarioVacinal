@@ -29,28 +29,28 @@ public class EnfermagemController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("listar-profissional-aplicador/{id:int}")]
+    [HttpGet("listar-profissional-aplicador/{idProfissional:int}")]
     [ProducesResponseType(typeof(RespostaProfissionalAplicadorDTO), (StatusCodes.Status200OK))]
-    public async Task<IActionResult> ObterProfissionaisAplicador([FromRoute]int id, [FromServices] IObterProfissionalAplicador useCase)
+    public async Task<IActionResult> ObterProfissionaisAplicador([FromRoute]int idProfissional, [FromServices] IObterProfissionalAplicador useCase)
     {
-        var resultado = await useCase.ObterProfissionaisDeImunizacao(id);
+        var resultado = await useCase.ObterProfissionaisDeImunizacao(idProfissional);
         return Ok(resultado);
     }
 
 
-    [HttpPut("atualizar/{id:int}")]
-    public async Task<IActionResult> AtualizarProfissionaisDeEnfermagem([FromRoute] int id, [FromBody] RegistroProfissionaisSaude registro, 
+    [HttpPut("atualizar/{idProfissional:int}")]
+    public async Task<IActionResult> AtualizarProfissionaisDeEnfermagem([FromRoute] int idProfissional, [FromBody] RegistroProfissionaisSaude registro, 
         [FromServices] IAtualizacaoDeProfissionaisEnfermagem useCase )
     {
-        await useCase.ProfissionaisDeEnfermagem(registro, id);
+        await useCase.ProfissionaisDeEnfermagem(registro, idProfissional);
         return NoContent();
     }
 
-    [HttpDelete("deletar/{id:int}")]
-    public async Task<IActionResult> DeletarProfissionaisDeEnfermagem([FromRoute] int id,
+    [HttpDelete("deletar/{idProfissional:int}")]
+    public async Task<IActionResult> DeletarProfissionaisDeEnfermagem([FromRoute] int idProfissional,
       [FromServices] IDeletarProfissionaisEnfermagem useCase)
     {
-        await useCase.DeletarProfissionais(id);
+        await useCase.DeletarProfissionais(idProfissional);
         return NoContent();
     }
 

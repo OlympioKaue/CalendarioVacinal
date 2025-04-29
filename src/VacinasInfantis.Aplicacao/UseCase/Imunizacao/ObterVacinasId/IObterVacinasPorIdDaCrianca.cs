@@ -2,7 +2,7 @@
 
 namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasId;
 
-public interface IObterVacinasInfantisIdade
+public interface IObterVacinasPorIdDaCrianca
 {
     Task<RespostaCompletaDasVacinas> ObterVacinaPorID(int id);
 }

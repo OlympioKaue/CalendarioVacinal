@@ -33,12 +33,6 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<IProfissionalSaudeServico, EnfermagemRepositorio>();
         services.AddScoped<IServicoDeEmailRepositorio, ServicoDeEmailRepositorio>();
        
-
-
-
-        // Extensão de Injeção de Dependência para o repositório 
-
-
     }
         
 
@@ -47,8 +41,6 @@ public static class ExtensaoInjecaoDependencia
     {
         var conexao = configuration.GetConnectionString("DefaultConnection");
         var versaoMySql = new MySqlServerVersion(new Version(8, 0, 41));
-
-        
 
         services.AddDbContext<VacinaInfantilDbContext>(vacina =>
          vacina.UseMySql(conexao, versaoMySql, vacina => vacina.MigrationsAssembly("VacinasInfantis.API")))

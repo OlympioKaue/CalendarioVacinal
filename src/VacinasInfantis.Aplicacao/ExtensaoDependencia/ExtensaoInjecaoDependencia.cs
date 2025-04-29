@@ -33,7 +33,7 @@ public static class ExtensaoInjecaoDependencia
     private static void AdicionarUseCase(this IServiceCollection services)
     {
         services.AddScoped<IObterVacinasInfantis, GetVacinasInfantisUseCase>();
-        services.AddScoped<IObterVacinasInfantisIdade, ObterVacinasInfantisIdade>();
+        services.AddScoped<IObterVacinasPorIdDaCrianca, ObterVacinasPorIdDaCrianca>();
         services.AddScoped<IRegistrosDeCriancas, RegistrosDeCriancas>();
         services.AddScoped<IRegistroDeImunizantes, RegistroDeImunizantes>();
         services.AddScoped<IObterVacinasAtuais_Proximas, ObterVacinasAtuais_Proximas>();
@@ -46,13 +46,5 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<IDeletarProfissionaisEnfermagem, DeletarProfissionaisEnfermagem>();
         services.AddScoped<IAtualizarImunizantes, AtualizarImunizantes>();
         services.AddScoped<IDeletarImunizantes, DeletarImunizantes>();
-    
-       
-
-
-
-
-        // Extensão de Injeção de Dependência //
-
     }
 }

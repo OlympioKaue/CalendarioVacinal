@@ -5,12 +5,12 @@ using VacinasInfantis.Excecao.BaseDaExcecao;
 
 namespace VacinasInfantis.Aplicacao.UseCase.Imunizacao.ObterVacinasId;
 
-public class ObterVacinasInfantisIdade : IObterVacinasInfantisIdade
+public class ObterVacinasPorIdDaCrianca : IObterVacinasPorIdDaCrianca
 {
     private readonly IVacinasInfantis _vacinas;
     private readonly IMapper _mapeamento;
 
-    public ObterVacinasInfantisIdade(IVacinasInfantis vacinas, IMapper mapeamento)
+    public ObterVacinasPorIdDaCrianca(IVacinasInfantis vacinas, IMapper mapeamento)
     {
         _vacinas = vacinas;
         _mapeamento = mapeamento;
@@ -18,14 +18,13 @@ public class ObterVacinasInfantisIdade : IObterVacinasInfantisIdade
 
     public async Task<RespostaCompletaDasVacinas> ObterVacinaPorID(int id)
     {
-        // Verifica se a idade é válida
-        // Idade valida de 0 a 48 meses, equivalente 0 meses a 4 anos.
+        // Verifique o Id da Criança.
         // Retorna as vacinas conforme a idade da criança.
 
-        var result = await _vacinas.ObterVacinasIdade(id);
+        var result = await _vacinas.ObterVacinasPorId(id);
         if(result.Count == 0)
         {
-            throw new NaoEncontrado("Vacina não encontrada, digite novamente o ID da Criança");
+            throw new NaoEncontrado("Vacina não encontrada para essa criança");
         }
 
         return new RespostaCompletaDasVacinas

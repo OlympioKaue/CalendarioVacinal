@@ -24,12 +24,11 @@ public class RegistroEnfermagem : IRegistroEnfermagem
 
     public async Task<RespostaRegistroEnfermagem> RegistrarProfissionaisDaEnfermagem(RegistroProfissionaisSaude registro)
     {
-        // Valide o registros de entrada
-
-        // Mapeia o registro de entrada para a entidade Profissionais
-        // Adicione o profissional de saúde ao banco de dados
-        // e salve as alterações
-        // Retorna a resposta mapeada
+        // Valide o registros de entrada.
+        // Mapeia o registro de entrada para a entidade Profissionais.
+        // Adicione o profissional de saúde ao banco de dados.
+        // e salve as alterações.
+        // Retorna a resposta mapeada.
 
         Validate(registro);
 
